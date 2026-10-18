@@ -26,6 +26,10 @@
 
 ## 3. Completed Milestones
 
+- [x] **Dynamic OpenGraph Edge Cards & Pill Badge Centering:**
+  - Built Cloudflare Edge Functions (`functions/post.js` & `functions/page.js`) with native `HTMLRewriter` to inject custom story title, excerpt, and thumbnail into OpenGraph and Twitter card meta tags on link sharing (iMessage, WhatsApp, Slack, Twitter/X).
+  - Centered the pill-shaped "Featured Writing" badge and subtext on mobile viewports for balanced presentation.
+  - Added full static OpenGraph tags to `index.html`, `archive.html`, and `links.html`. *(Completed: 2026-10-18)*
 - [x] **Editorial Design & Typography Overhaul:** Shipped high-end publishing experience across the site:
   - Loaded *Newsreader* variable editorial serif for literary long-form reading.
   - Added ambient scroll progress bar on `post.html` via native CSS scroll-timeline with JS fallback.
