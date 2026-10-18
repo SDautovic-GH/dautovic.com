@@ -1,0 +1,8 @@
+{
+  "name": "dautovic.com",
+  "version": "1.0.0",
+  "description": "dautovic.com static website and CMS",
+  "scripts": {
+    "build": "echo 'Build complete'"
+  }
+}
