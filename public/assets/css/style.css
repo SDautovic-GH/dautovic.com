@@ -606,9 +606,6 @@ a:hover {
   .site-nav a[href="/"].nav-link {
     display: none;
   }
-  .nav-link.hide-mobile {
-    display: none;
-  }
   .nav-link {
     font-size: 0.86rem;
   }
