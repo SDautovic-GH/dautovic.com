@@ -1,9 +1,10 @@
 /* ==========================================================================
    dautovic.com - Lightweight CMS Desk Script
+   Supports Markdown, HTML, live preview, formatting toolbar & image upload
    ========================================================================== */
 
 (function () {
-  const PASSCODE = 'dautovic2026'; // Default passcode, customizable in Cloudflare Functions
+  const PASSCODE = 'dautovic2026';
 
   // Theme support
   const themeToggle = document.getElementById('theme-toggle');
@@ -39,6 +40,7 @@
   const postExcerptInput = document.getElementById('post-excerpt-input');
   const postContentInput = document.getElementById('post-content-input');
   const previewOutput = document.getElementById('preview-output');
+  const imageUploadInput = document.getElementById('image-upload-input');
   const saveDraftBtn = document.getElementById('save-draft-btn');
   const publishBtn = document.getElementById('publish-btn');
   const cancelEditBtn = document.getElementById('cancel-edit-btn');
@@ -48,7 +50,7 @@
   let posts = [];
   let editingPostId = null;
 
-  // Check existing session
+  // Session check
   if (sessionStorage.getItem('dautovic-auth') === 'true') {
     showDashboard();
   }
@@ -79,12 +81,10 @@
         if (!res.ok) throw new Error('API not available');
         posts = await res.json();
       } catch (e) {
-        // Fall back to static JSON + localStorage overrides
         res = await fetch('/data/posts.json');
         posts = await res.json();
         const localOverrides = JSON.parse(localStorage.getItem('dautovic_custom_posts') || '[]');
         if (localOverrides.length > 0) {
-          // Merge local posts
           const localMap = new Map(localOverrides.map(p => [p.slug, p]));
           posts = posts.map(p => localMap.get(p.slug) || p);
           localOverrides.forEach(p => {
@@ -174,6 +174,7 @@
     updatePreview();
   }
 
+  // Auto slugify title
   postTitleInput.addEventListener('input', () => {
     if (!editingPostId) {
       postSlugInput.value = postTitleInput.value
@@ -183,10 +184,178 @@
     }
   });
 
+  // Toolbar Formatting Helpers
+  function insertAtCursor(textToInsert) {
+    const textarea = postContentInput;
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const val = textarea.value;
+
+    textarea.value = val.substring(0, start) + textToInsert + val.substring(end);
+    textarea.selectionStart = textarea.selectionEnd = start + textToInsert.length;
+    textarea.focus();
+    updatePreview();
+  }
+
+  function wrapSelection(prefix, suffix, defaultText) {
+    const textarea = postContentInput;
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const val = textarea.value;
+    const selected = val.substring(start, end) || defaultText;
+
+    const replacement = prefix + selected + suffix;
+    textarea.value = val.substring(0, start) + replacement + val.substring(end);
+    textarea.selectionStart = start + prefix.length;
+    textarea.selectionEnd = start + prefix.length + selected.length;
+    textarea.focus();
+    updatePreview();
+  }
+
+  function prefixLines(prefix) {
+    const textarea = postContentInput;
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const val = textarea.value;
+
+    const selected = val.substring(start, end) || 'List item';
+    const lines = selected.split('\n');
+    const prefixed = lines.map(l => prefix + l).join('\n');
+
+    textarea.value = val.substring(0, start) + prefixed + val.substring(end);
+    textarea.selectionStart = start;
+    textarea.selectionEnd = start + prefixed.length;
+    textarea.focus();
+    updatePreview();
+  }
+
+  // Toolbar button listeners
+  document.querySelectorAll('.editor-toolbar .toolbar-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const action = btn.getAttribute('data-action');
+      if (!action) return;
+
+      switch (action) {
+        case 'bold':
+          wrapSelection('**', '**', 'bold text');
+          break;
+        case 'italic':
+          wrapSelection('*', '*', 'italic text');
+          break;
+        case 'heading':
+          insertAtCursor('\n## Heading 2\n');
+          break;
+        case 'subheading':
+          insertAtCursor('\n### Heading 3\n');
+          break;
+        case 'bullet':
+          prefixLines('- ');
+          break;
+        case 'number':
+          prefixLines('1. ');
+          break;
+        case 'quote':
+          prefixLines('> ');
+          break;
+        case 'newline':
+          insertAtCursor('<br>\n');
+          break;
+        case 'link':
+          const textarea = postContentInput;
+          const selectedText = textarea.value.substring(textarea.selectionStart, textarea.selectionEnd) || 'link text';
+          const url = prompt('Enter link URL (e.g. https://example.com):', 'https://');
+          if (url && url !== 'https://') {
+            insertAtCursor(`[${selectedText}](${url})`);
+          }
+          break;
+      }
+    });
+  });
+
+  // Image Upload Handler
+  if (imageUploadInput) {
+    imageUploadInput.addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const alt = prompt('Enter image caption/alt text:', file.name.split('.')[0]) || 'Image';
+      
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const img = new Image();
+        img.onload = () => {
+          // Resize if larger than 1200px wide
+          const maxW = 1200;
+          let w = img.width;
+          let h = img.height;
+          if (w > maxW) {
+            h = Math.round((h * maxW) / w);
+            w = maxW;
+          }
+          const canvas = document.createElement('canvas');
+          canvas.width = w;
+          canvas.height = h;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, w, h);
+          const dataUrl = canvas.toDataURL('image/jpeg', 0.82);
+
+          insertAtCursor(`\n![${alt}](${dataUrl})\n`);
+        };
+        img.src = event.target.result;
+      };
+      reader.readAsDataURL(file);
+      imageUploadInput.value = '';
+    });
+  }
+
+  // Real-time Markdown & HTML Live Preview Parser
+  function parseContent(raw) {
+    if (!raw) return '<em style="color:var(--text-muted);">Preview will render here…</em>';
+
+    // If it contains Markdown markers, render them cleanly
+    let html = raw;
+
+    // Headings
+    html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
+    html = html.replace(/^## (.*$)/gim, '<h2>$1</h2>');
+    html = html.replace(/^# (.*$)/gim, '<h1>$1</h1>');
+
+    // Bold & Italic
+    html = html.replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>');
+    html = html.replace(/\*(.*?)\*/gim, '<em>$1</em>');
+
+    // Images: ![alt](url)
+    html = html.replace(/!\[(.*?)\]\((.*?)\)/gim, '<figure style="margin:16px 0;"><img src="$2" alt="$1" style="max-width:100%;border-radius:8px;"><figcaption style="font-size:0.8rem;color:var(--text-muted);margin-top:4px;">$1</figcaption></figure>');
+
+    // Links: [text](url)
+    html = html.replace(/\[(.*?)\]\((.*?)\)/gim, '<a href="$2" target="_blank" rel="noopener" style="color:var(--accent);">$1</a>');
+
+    // Blockquotes: > quote
+    html = html.replace(/^\> (.*$)/gim, '<blockquote>$1</blockquote>');
+
+    // Unordered lists: - item
+    html = html.replace(/^\- (.*$)/gim, '<li>$1</li>');
+    html = html.replace(/(<li>.*<\/li>)/gim, '<ul>$1</ul>');
+    html = html.replace(/<\/ul>\s*<ul>/gim, '');
+
+    // Convert double newlines to paragraphs if not already wrapped in tags
+    const paragraphs = html.split(/\n\s*\n/);
+    html = paragraphs.map(p => {
+      p = p.trim();
+      if (!p) return '';
+      if (p.startsWith('<h') || p.startsWith('<ul') || p.startsWith('<block') || p.startsWith('<figure') || p.startsWith('<div')) {
+        return p;
+      }
+      return `<p>${p.replace(/\n/g, '<br>')}</p>`;
+    }).join('\n');
+
+    return html;
+  }
+
   postContentInput.addEventListener('input', updatePreview);
 
   function updatePreview() {
-    previewOutput.innerHTML = postContentInput.value || '<em style="color:var(--text-muted);">Preview will render here…</em>';
+    previewOutput.innerHTML = parseContent(postContentInput.value);
   }
 
   cancelEditBtn.addEventListener('click', () => {
@@ -207,7 +376,8 @@
     const slug = postSlugInput.value.trim() || title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
     const categories = postCatInput.value.split(',').map(s => s.trim()).filter(Boolean);
     const excerpt = postExcerptInput.value.trim();
-    const content = postContentInput.value.trim();
+    const rawContent = postContentInput.value.trim();
+    const formattedContent = parseContent(rawContent);
     const now = new Date().toISOString().replace('T', ' ').substring(0, 19);
 
     const postData = {
@@ -215,15 +385,14 @@
       slug,
       categories: categories.length ? categories : ['General'],
       tags: [],
-      excerpt,
-      content,
-      readTime: `${Math.max(1, Math.round(content.split(/\s+/).length / 200))} min read`,
+      excerpt: excerpt || rawContent.substring(0, 150).replace(/<[^>]+>/g, '') + '…',
+      content: formattedContent,
+      readTime: `${Math.max(1, Math.round(rawContent.split(/\s+/).length / 200))} min read`,
       date: now,
       status
     };
 
     try {
-      // Attempt API save to Cloudflare D1
       const res = await fetch('/api/posts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -231,7 +400,7 @@
       });
       if (!res.ok) throw new Error('API save failed');
     } catch (e) {
-      // Fallback: save to localStorage
+      // Local fallback
       let custom = JSON.parse(localStorage.getItem('dautovic_custom_posts') || '[]');
       custom = custom.filter(p => p.slug !== slug);
       custom.unshift(postData);

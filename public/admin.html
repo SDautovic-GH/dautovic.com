@@ -100,7 +100,7 @@
       border-radius: var(--radius-md);
       padding: 16px;
       background: var(--bg-subtle);
-      max-height: 400px;
+      max-height: 480px;
       overflow-y: auto;
     }
     .post-table {
@@ -242,10 +242,30 @@
           <textarea id="post-excerpt-input" class="form-textarea" rows="2" placeholder="Brief summary of the article…"></textarea>
         </div>
 
+        <!-- Content Editor with Toolbar -->
         <div class="form-group">
-          <label class="form-label">Content (HTML or Markdown)</label>
+          <label class="form-label">Story Content (Markdown & HTML supported)</label>
           <div class="editor-layout">
-            <textarea id="post-content-input" class="form-textarea" rows="14" placeholder="Write your story here…" style="font-family:monospace;font-size:0.9rem;"></textarea>
+            <div class="editor-textarea-wrap">
+              <div class="editor-toolbar">
+                <button type="button" class="toolbar-btn" data-action="bold" title="Bold"><b>B</b></button>
+                <button type="button" class="toolbar-btn" data-action="italic" title="Italic"><i>I</i></button>
+                <button type="button" class="toolbar-btn" data-action="heading" title="Heading (H2)">H2</button>
+                <button type="button" class="toolbar-btn" data-action="subheading" title="Subheading (H3)">H3</button>
+                <span class="toolbar-divider"></span>
+                <button type="button" class="toolbar-btn" data-action="bullet" title="Bullet List">• List</button>
+                <button type="button" class="toolbar-btn" data-action="number" title="Numbered List">1. List</button>
+                <button type="button" class="toolbar-btn" data-action="quote" title="Quote">“ ”</button>
+                <button type="button" class="toolbar-btn" data-action="newline" title="Line Break">&para; Break</button>
+                <span class="toolbar-divider"></span>
+                <button type="button" class="toolbar-btn" data-action="link" title="Add / Edit Link">🔗 Link</button>
+                <label class="toolbar-btn file-btn" title="Upload Image from computer">
+                  📷 Image
+                  <input type="file" id="image-upload-input" accept="image/*" style="display:none;">
+                </label>
+              </div>
+              <textarea id="post-content-input" class="form-textarea" rows="16" placeholder="Write your story here…" style="font-family:monospace;font-size:0.92rem;"></textarea>
+            </div>
             <div>
               <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:6px;font-weight:600;">Live Preview:</div>
               <div id="preview-output" class="preview-box article-body"></div>
