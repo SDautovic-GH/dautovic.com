@@ -4,7 +4,13 @@
    ========================================================================== */
 
 (function () {
-  const PASSCODE = 'dautovic2026';
+  // SHA-256 hash of passcode so raw password is never exposed in client JS or GitHub
+  const PASSCODE_HASH = '6cf168e378bde84187e05af52800acc65fc6a86b18763a47fd56c76cf33c042f';
+
+  async function hashString(str) {
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+  }
 
   // Theme support
   const themeToggle = document.getElementById('theme-toggle');
@@ -56,9 +62,11 @@
     showDashboard();
   }
 
-  loginForm.addEventListener('submit', (e) => {
+  loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    if (passcodeInput.value === PASSCODE) {
+    const entered = passcodeInput.value.trim();
+    const enteredHash = await hashString(entered);
+    if (enteredHash === PASSCODE_HASH) {
       sessionStorage.setItem('dautovic-auth', 'true');
       showDashboard();
     } else {
