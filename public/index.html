@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dautovic — Learn every day</title>
+  <meta name="description" content="Personal thoughts, technology trends, and discoveries by Samir Dautovic.">
+  <link rel="alternate" type="application/rss+xml" title="Dautovic RSS Feed" href="/feed.xml">
+  <link rel="icon" href="/assets/img/logo.jpg">
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+
+  <!-- Top Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand-group">
+        <a href="/" style="display:flex;align-items:center;gap:12px;">
+          <img src="/assets/img/logo.jpg" alt="Dautovic Logo" class="brand-logo">
+          <div class="brand-text">
+            <h1>Dautovic</h1>
+            <span class="brand-tagline">Learn every day.</span>
+          </div>
+        </a>
+      </div>
+
+      <nav class="site-nav">
+        <a href="/" class="nav-link active">Home</a>
+        <a href="/archive.html" class="nav-link">Archive</a>
+        <a href="/page.html?slug=about" class="nav-link hide-mobile">About</a>
+        <a href="https://today.dautovic.com" class="today-pill-btn" target="_blank" rel="noopener" title="Open Today News Reader">
+          <span>Today</span>
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+        </a>
+        <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle dark mode">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container">
+    <!-- Hero Banner -->
+    <section class="hero-section">
+      <div class="hero-img-wrap">
+        <img src="/assets/img/hero.jpg" alt="Boston Skyline" class="hero-img">
+      </div>
+      <h2 class="hero-title">Learn every day</h2>
+      <p class="hero-sub">Notes on technology, leadership, and digital media from Boston and beyond.</p>
+    </section>
+
+    <!-- Search & Filter Controls -->
+    <div class="controls-bar">
+      <div class="search-box">
+        <svg class="search-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" id="search-input" class="search-input" placeholder="Search 60+ stories, topics, or keywords…">
+      </div>
+      <div id="category-chips" class="category-chips"></div>
+    </div>
+
+    <!-- Posts Stream -->
+    <div id="posts-container" class="posts-stream">
+      <div style="text-align:center;padding:40px;color:var(--text-muted)">Loading stories…</div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination-wrap">
+      <button id="prev-btn" class="page-btn" disabled>← Newer</button>
+      <span id="page-indicator" style="font-size:0.88rem;color:var(--text-muted);display:flex;align-items:center;"></span>
+      <button id="next-btn" class="page-btn">Older →</button>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-links">
+        <a href="/">Home</a>
+        <a href="/archive.html">Archive</a>
+        <a href="/page.html?slug=about">About</a>
+        <a href="/page.html?slug=contact-2">Contact</a>
+        <a href="https://today.dautovic.com">Today Reader</a>
+        <a href="/feed.xml">RSS Feed</a>
+        <a href="/admin/">Admin</a>
+      </div>
+      <p>© 2026 Samir Dautovic. Built on Cloudflare Pages.</p>
+    </div>
+  </footer>
+
+  <script src="/assets/js/app.js"></script>
+</body>
+</html>

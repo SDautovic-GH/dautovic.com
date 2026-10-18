@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Archive — Dautovic</title>
+  <link rel="icon" href="/assets/img/logo.jpg">
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+
+  <!-- Top Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand-group">
+        <a href="/" style="display:flex;align-items:center;gap:12px;">
+          <img src="/assets/img/logo.jpg" alt="Dautovic Logo" class="brand-logo">
+          <div class="brand-text">
+            <h1>Dautovic</h1>
+            <span class="brand-tagline">Learn every day.</span>
+          </div>
+        </a>
+      </div>
+
+      <nav class="site-nav">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/archive.html" class="nav-link active">Archive</a>
+        <a href="https://today.dautovic.com" class="today-pill-btn" target="_blank" rel="noopener">
+          <span>Today</span>
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+        </a>
+        <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle dark mode">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:30px;padding-bottom:60px;">
+    <h1 style="font-size:2rem;font-weight:800;margin-bottom:8px;">Story Archive</h1>
+    <p style="color:var(--text-muted);margin-bottom:32px;">Chronological index of all published notes, discoveries, and articles.</p>
+
+    <div id="archive-container">
+      <div style="text-align:center;padding:40px;color:var(--text-muted)">Loading archive…</div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-links">
+        <a href="/">Home</a>
+        <a href="/archive.html">Archive</a>
+        <a href="/page.html?slug=about">About</a>
+        <a href="/page.html?slug=contact-2">Contact</a>
+        <a href="https://today.dautovic.com">Today Reader</a>
+        <a href="/feed.xml">RSS Feed</a>
+      </div>
+      <p>© 2026 Samir Dautovic. Built on Cloudflare Pages.</p>
+    </div>
+  </footer>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const savedTheme = localStorage.getItem('dautovic-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    if (themeToggle) {
+      themeToggle.addEventListener('click', () => {
+        const cur = document.documentElement.getAttribute('data-theme');
+        const next = cur === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('dautovic-theme', next);
+      });
+    }
+
+    async function loadArchive() {
+      const container = document.getElementById('archive-container');
+      try {
+        let res = await fetch('/data/posts.json');
+        const posts = await res.json();
+
+        // Group by year
+        const byYear = {};
+        posts.forEach(p => {
+          const year = p.date.split('-')[0] || 'Earlier';
+          if (!byYear[year]) byYear[year] = [];
+          byYear[year].push(p);
+        });
+
+        const years = Object.keys(byYear).sort((a, b) => b.localeCompare(a));
+
+        container.innerHTML = years.map(yr => `
+          <div class="archive-year-group">
+            <h2 class="archive-year-title">${yr} (${byYear[yr].length})</h2>
+            <ul class="archive-list">
+              ${byYear[yr].map(p => {
+                const d = new Date(p.date.replace(' ', 'T'));
+                const dateStr = isNaN(d) ? p.date.split(' ')[0] : d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                return `
+                  <li class="archive-item">
+                    <a href="/post.html?slug=${encodeURIComponent(p.slug)}" style="font-weight:500;">
+                      ${escapeHtml(p.title)}
+                    </a>
+                    <span class="archive-date">${dateStr}</span>
+                  </li>
+                `;
+              }).join('')}
+            </ul>
+          </div>
+        `).join('');
+
+      } catch (e) {
+        container.innerHTML = '<div style="color:var(--text-muted);text-align:center;">Failed to load archive.</div>';
+      }
+    }
+
+    function escapeHtml(str) {
+      return (str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    loadArchive();
+  </script>
+</body>
+</html>

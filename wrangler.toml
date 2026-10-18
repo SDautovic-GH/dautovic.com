@@ -1,0 +1,8 @@
+name = "dautovic"
+pages_build_output_dir = "public"
+compatibility_date = "2026-10-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "dautovic-db"
+database_id = "local-d1-placeholder"

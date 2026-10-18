@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1,
+    "title": "About",
+    "slug": "about",
+    "date": "2006-01-04 13:54:32",
+    "categories": [
+      "General"
+    ],
+    "tags": [],
+    "excerpt": "My name is Samir Dautovic. I was born in Bosnia and Herzegovina and have lived in USA since 1996. Some facts about me: My first computer was Compaq Deskpro 4000 MMX 233MHz,…",
+    "content": "<div class=\"wp-block-media-text is-stacked-on-mobile is-vertically-aligned-top\" style=\"grid-template-columns:30% auto\"><figure class=\"wp-block-media-text__media\"><img src=\"https://dautovic.com/wp-content/uploads/2023/11/42dd7-me_public_3.png?w=262\" alt=\"\" class=\"wp-image-3224 size-full\" /></figure><div class=\"wp-block-media-text__content\">\n<div class=\"wp-block-group\">\n<div class=\"wp-block-columns\">\n<div class=\"wp-block-column\" style=\"flex-basis:100%\">\n<div class=\"wp-block-group\">\n<p>My name is Samir Dautovic. I was born in Bosnia and Herzegovina and have lived in USA since 1996. Some facts about me:</p>\n\n\n\n<p>My first computer was Compaq Deskpro 4000 MMX 233MHz, acquired in 1998 and retired in 2005.</p>\n\n\n\n<p>I think the internet is one of the greatest inventions, after wheel and writing.</p>\n\n\n\n<p>I must remember to never discuss politics, religion and guns online.</p>\n\n\n\n<p>More to come...</p>\n\n\n\n<div class=\"wp-block-buttons has-custom-font-size has-small-font-size\">\n<div class=\"wp-block-button\"><a class=\"wp-block-button__link has-white-color has-text-color has-link-color wp-element-button\" href=\"https://dautovic.com/contact-2/\">Contact</a></div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div></div>",
+    "readTime": "1 min read",
+    "link": "https://dautovic.com/about/",
+    "status": "published"
+  },
+  {
+    "id": 2,
+    "title": "Archive",
+    "slug": "archive-2",
+    "date": "2010-06-23 17:33:11",
+    "categories": [
+      "General"
+    ],
+    "tags": [],
+    "excerpt": "",
+    "content": "",
+    "readTime": "1 min read",
+    "link": "https://dautovic.com/archive-2/",
+    "status": "published"
+  },
+  {
+    "id": 3,
+    "title": "Contact",
+    "slug": "contact-2",
+    "date": "2012-08-18 14:22:13",
+    "categories": [
+      "General"
+    ],
+    "tags": [],
+    "excerpt": "",
+    "content": "<div class=\"wp-block-jetpack-contact-form\" style=\"padding-top:16px;padding-right:16px;padding-bottom:16px;padding-left:16px\">\n\n\n\n\n\n</div>",
+    "readTime": "1 min read",
+    "link": "https://dautovic.com/contact-2/",
+    "status": "published"
+  },
+  {
+    "id": 4,
+    "title": "Headlines",
+    "slug": "headlines",
+    "date": "2023-11-30 15:35:13",
+    "categories": [
+      "General"
+    ],
+    "tags": [],
+    "excerpt": "New York Times Axios Motley Fool Money Podcast",
+    "content": "<h5 class=\"wp-block-heading has-body-font-family has-medium-font-size\" style=\"font-style:normal;font-weight:500;text-transform:capitalize\"><a href=\"https://www.nytimes.com/section/politics\">New York Times</a></h5>\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n<h5 class=\"wp-block-heading has-body-font-family has-medium-font-size\" style=\"font-style:normal;font-weight:500\"><a href=\"https://www.axios.com/\">Axios</a></h5>\n\n\n\n\n\n<h5 class=\"wp-block-heading has-body-font-family has-medium-font-size\" style=\"font-style:normal;font-weight:500\"><a href=\"https://www.fool.com/podcasts/motley-fool-money\">Motley Fool Money Podcast</a></h5>",
+    "readTime": "1 min read",
+    "link": "https://dautovic.com/headlines/",
+    "status": "published"
+  },
+  {
+    "id": 5,
+    "title": "Sports",
+    "slug": "sports",
+    "date": "2023-11-25 14:33:48",
+    "categories": [
+      "General"
+    ],
+    "tags": [],
+    "excerpt": "ESPN FC Boston Sports - ESPN Boston Sports - The Athletic",
+    "content": "<h5 class=\"wp-block-heading has-body-font-family has-medium-font-size\"><a href=\"https://www.espn.com/soccer/\">ESPN FC</a></h5>\n\n\n\n\n\n<h5 class=\"wp-block-heading has-body-font-family has-medium-font-size\"><a href=\"https://www.espn.com/boston/\">Boston Sports - ESPN</a></h5>\n\n\n\n\n\n\n\n\n\n\n\n<h5 class=\"wp-block-heading has-body-font-family has-medium-font-size\"><a href=\"https://theathletic.com/location/boston/\">Boston Sports - The Athletic</a></h5>",
+    "readTime": "1 min read",
+    "link": "https://dautovic.com/sports/",
+    "status": "published"
+  },
+  {
+    "id": 6,
+    "title": "Tech News",
+    "slug": "tech-news",
+    "date": "2023-11-25 14:51:19",
+    "categories": [
+      "General"
+    ],
+    "tags": [],
+    "excerpt": "Verge MacRumors NYT Technology WSJ Technology Bleeping Computer Scripting News Om Stratechery",
+    "content": "<h5 class=\"wp-block-heading has-body-font-family has-medium-font-size\" style=\"text-decoration:none\"><a href=\"https://www.theverge.com/tech\">Verge</a></h5>\n\n\n\n\n\n<h5 class=\"wp-block-heading has-body-font-family has-medium-font-size\" style=\"text-decoration:none\"><a href=\"https://www.macrumors.com/\">MacRumors</a></h5>\n\n\n\n\n\n<h5 class=\"wp-block-heading has-body-font-family has-medium-font-size\"><a href=\"https://www.nytimes.com/section/technology\">NYT Technology</a></h5>\n\n\n\n\n\n<h5 class=\"wp-block-heading has-body-font-family has-medium-font-size\"><a href=\"https://www.wsj.com/tech\">WSJ Technology</a></h5>\n\n\n\n\n\n<h5 class=\"wp-block-heading has-body-font-family has-medium-font-size\"><a href=\"https://www.bleepingcomputer.com/\">Bleeping Computer</a></h5>\n\n\n\n\n\n<h5 class=\"wp-block-heading has-body-font-family has-medium-font-size\"><a href=\"http://scripting.com/\">Scripting News</a></h5>\n\n\n\n\n\n<h5 class=\"wp-block-heading has-body-font-family has-medium-font-size\"><a href=\"https://om.co/\">Om</a></h5>\n\n\n\n\n\n<h5 class=\"wp-block-heading has-body-font-family has-medium-font-size\"><a href=\"https://stratechery.com/\">Stratechery</a></h5>",
+    "readTime": "1 min read",
+    "link": "https://dautovic.com/tech-news/",
+    "status": "published"
+  },
+  {
+    "id": 7,
+    "title": "Local News - Boston",
+    "slug": "local-news-boston",
+    "date": "2023-11-25 14:59:04",
+    "categories": [
+      "General"
+    ],
+    "tags": [],
+    "excerpt": "NBC Boston",
+    "content": "<h5 class=\"wp-block-heading has-body-font-family has-medium-font-size\"><a href=\"https://www.nbcboston.com/\">NBC Boston</a></h5>",
+    "readTime": "1 min read",
+    "link": "https://dautovic.com/local-news-boston/",
+    "status": "published"
+  },
+  {
+    "id": 8,
+    "title": "Vijesti iz BiH",
+    "slug": "vijesti-iz-bih",
+    "date": "2023-11-25 15:17:20",
+    "categories": [
+      "General"
+    ],
+    "tags": [],
+    "excerpt": "Oslobođenje O Kanal Slobodna-Bosna Sport",
+    "content": "<h5 class=\"wp-block-heading has-body-font-family has-medium-font-size\"><a href=\"https://okanal.oslobodjenje.ba/okanal\">Oslobođenje O Kanal</a></h5>\n\n\n\n\n\n<h5 class=\"wp-block-heading has-body-font-family has-medium-font-size\"><a href=\"https://www.slobodna-bosna.ba/rubrika/7/sport.html\">Slobodna-Bosna Sport</a></h5>",
+    "readTime": "1 min read",
+    "link": "https://dautovic.com/vijesti-iz-bih/",
+    "status": "published"
+  }
+]

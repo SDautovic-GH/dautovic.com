@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page — Dautovic</title>
+  <link rel="icon" href="/assets/img/logo.jpg">
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+
+  <!-- Top Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand-group">
+        <a href="/" style="display:flex;align-items:center;gap:12px;">
+          <img src="/assets/img/logo.jpg" alt="Dautovic Logo" class="brand-logo">
+          <div class="brand-text">
+            <h1>Dautovic</h1>
+            <span class="brand-tagline">Learn every day.</span>
+          </div>
+        </a>
+      </div>
+
+      <nav class="site-nav">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/archive.html" class="nav-link">Archive</a>
+        <a href="https://today.dautovic.com" class="today-pill-btn" target="_blank" rel="noopener">
+          <span>Today</span>
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+        </a>
+        <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle dark mode">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:30px;padding-bottom:60px;">
+    <a href="/" class="back-link">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      <span>Back to Home</span>
+    </a>
+
+    <div id="page-loader" style="text-align:center;padding:40px;color:var(--text-muted)">Loading…</div>
+
+    <div id="page-content" style="display:none;">
+      <h1 id="page-title" class="article-title" style="margin-bottom:24px;"></h1>
+      <div id="page-body" class="article-body"></div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-links">
+        <a href="/">Home</a>
+        <a href="/archive.html">Archive</a>
+        <a href="/page.html?slug=about">About</a>
+        <a href="/page.html?slug=contact-2">Contact</a>
+        <a href="https://today.dautovic.com">Today Reader</a>
+        <a href="/feed.xml">RSS Feed</a>
+      </div>
+      <p>© 2026 Samir Dautovic. Built on Cloudflare Pages.</p>
+    </div>
+  </footer>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const savedTheme = localStorage.getItem('dautovic-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    if (themeToggle) {
+      themeToggle.addEventListener('click', () => {
+        const cur = document.documentElement.getAttribute('data-theme');
+        const next = cur === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('dautovic-theme', next);
+      });
+    }
+
+    async function loadPage() {
+      const params = new URLSearchParams(window.location.search);
+      const slug = params.get('slug') || 'about';
+
+      try {
+        const res = await fetch('/data/pages.json');
+        const pages = await res.json();
+        const page = pages.find(p => p.slug === slug);
+        if (page) {
+          document.title = `${page.title} — Dautovic`;
+          document.getElementById('page-title').textContent = page.title;
+          document.getElementById('page-body').innerHTML = page.content;
+          document.getElementById('page-loader').style.display = 'none';
+          document.getElementById('page-content').style.display = 'block';
+        } else {
+          document.getElementById('page-loader').textContent = 'Page not found.';
+        }
+      } catch (e) {
+        document.getElementById('page-loader').textContent = 'Error loading page.';
+      }
+    }
+
+    loadPage();
+  </script>
+</body>
+</html>
