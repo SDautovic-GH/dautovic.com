@@ -98,9 +98,24 @@
         btn.classList.add('active');
         currentCategory = btn.getAttribute('data-cat');
         currentPage = 1;
+
+        // Automatically scroll category chip smoothly into view
+        btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+
         renderPosts();
       });
     });
+
+    // Support horizontal scroll with mouse wheel
+    if (!categoryChips.dataset.wheelBound) {
+      categoryChips.dataset.wheelBound = 'true';
+      categoryChips.addEventListener('wheel', (e) => {
+        if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+          e.preventDefault();
+          categoryChips.scrollLeft += e.deltaY;
+        }
+      }, { passive: false });
+    }
   }
 
   function renderPosts() {
