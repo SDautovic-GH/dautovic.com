@@ -26,6 +26,7 @@
 
 ## 3. Completed Milestones
 
+- [x] **Navigation Privacy & Shortcuts:** Removed public "Today" header pill and footer link across all visitor pages (`index`, `archive`, `links`, `page`, `post`) to keep private RSS Reader hidden from public web visitors. Added quick-launcher shortcuts ("RSS Reader ↗") directly inside the private `/admin` Writing Desk header and dashboard. *(Completed: 2026-10-18)*
 - [x] **Domain Registrar Transfer to Cloudflare:** Successfully transferred `dautovic.com` from Automattic (WordPress.com) to Cloudflare Registrar. Expiration extended by 1 full year to 2027-12-17 with at-cost wholesale renewal pricing and unified DNS/hosting management. *(Completed: 2026-10-18)*
 - [x] **Legacy WordPress Site Decommissioning:** Downloaded full archival snapshot and set legacy WordPress.com site visibility to Private (under Settings → Reading), locking the name permanently on WordPress free tier without recurring fees. *(Completed: 2026-10-18)*
 - [x] **Cross-Platform Git Synchronization Scripts:** Built and tested `SyncGit-macOS-dautovic.com.ps1` (for macOS) and `SyncGit-dautovic.com.ps1` (for Windows workstations with OneDrive mirror sync), establishing commit-first automated push/pull workflows with repo size analytics. *(Completed: 2026-10-18)*
