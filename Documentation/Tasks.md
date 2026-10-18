@@ -12,6 +12,7 @@
 
 ## 1. Immediate Next Steps / Active Sprint
 
+- [ ] **Domain Registrar Transfer:** Transfer `dautovic.com` registration from Automattic (WordPress.com) to Cloudflare Registrar before 2026-12-17 expiration (unlock domain, obtain EPP code, initiate transfer in Cloudflare, approve confirmation email).
 - [ ] **Content Review & Verification:** Spot-check older posts (2005–2010) in the archive (`/archive.html`) to ensure all legacy image embeds and formatting display cleanly.
 - [ ] **CMS Writing Workflow Test:** Publish a new story draft via the CMS Desk (`/admin`) and verify automatic publication to `posts.json` / D1 and RSS feed (`/feed.xml`).
 - [ ] **Automated Backup Routine:** Establish a scheduled GitHub Action or local script to back up SQLite D1 database and feed exports weekly.
