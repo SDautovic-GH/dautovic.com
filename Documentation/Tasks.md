@@ -26,6 +26,7 @@
 
 ## 3. Completed Milestones
 
+- [x] **Cross-Platform Git Synchronization Scripts:** Built and tested `SyncGit-macOS-dautovic.com.ps1` (for macOS) and `SyncGit-dautovic.com.ps1` (for Windows workstations with OneDrive mirror sync), establishing commit-first automated push/pull workflows with repo size analytics. *(Completed: 2026-10-18)*
 - [x] **Firebase API Key Referrer Fix:** Diagnosed 403 `API_KEY_HTTP_REFERRER_BLOCKED` failure on `today.dautovic.com`. Identified that modern browsers (Safari/Chrome) enforce `strict-origin-when-cross-origin`, transmitting `https://today.dautovic.com` without a trailing slash. Added bare origin `https://today.dautovic.com` and `https://dautovic.com` to Google Cloud Console website restrictions, enabling successful multi-device authentication and cloud feed sync. *(Completed: 2026-10-18)*
 - [x] **Firebase Authorized Domains Registration:** Added `dautovic.com` and `today.dautovic.com` to Firebase Authentication Authorized Domains in project `rss-reader-fyi`. *(Completed: 2026-10-18)*
 - [x] **RSS Reader Migration to Cloudflare (`today.dautovic.com`):** Unlinked GitHub Pages custom domain to eliminate Let's Encrypt CAA negative DNS caching and `Dnsruby::NXDomain` loops. Deployed static PWA to Cloudflare Worker `rssreader` and attached custom domain `today.dautovic.com` with instant Google Trust Services wildcard SSL (`HTTP/2 200 OK`). *(Completed: 2026-10-18)*
