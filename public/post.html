@@ -50,19 +50,21 @@
 
     <article id="article-content" style="display:none;">
       <header class="article-header">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+        <div class="article-pre-meta">
           <span id="post-cat" class="card-cat"></span>
-          <span style="color:var(--text-muted)">•</span>
-          <span id="post-readtime" style="font-size:0.85rem;color:var(--text-muted)"></span>
+          <span class="meta-dot">•</span>
+          <span id="post-readtime" class="card-readtime"></span>
         </div>
         <h1 id="post-title" class="article-title"></h1>
         <div class="article-meta">
-          <span>By Samir Dautovic</span>
-          <span>•</span>
-          <time id="post-date"></time>
-          <button id="share-btn" style="margin-left:auto;background:none;border:none;color:var(--accent);cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-size:0.88rem;font-weight:600;">
+          <div class="article-meta-info">
+            <span class="article-author">Samir Dautovic</span>
+            <span class="meta-dot">•</span>
+            <time id="post-date"></time>
+          </div>
+          <button id="share-btn" class="share-btn" aria-label="Share story">
             <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8M16 6l-4-4-4 4M12 2v13"/></svg>
-            Share
+            <span>Share</span>
           </button>
         </div>
       </header>
@@ -176,7 +178,7 @@
       document.getElementById('post-readtime').textContent = post.readTime || '2 min read';
       
       const d = new Date(post.date.replace(' ', 'T'));
-      document.getElementById('post-date').textContent = isNaN(d) ? post.date : d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+      document.getElementById('post-date').textContent = isNaN(d) ? post.date : d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
       document.getElementById('post-body').innerHTML = post.content;
 
       // Next / Previous Story Links

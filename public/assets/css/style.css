@@ -363,10 +363,40 @@ a:hover {
 .card-meta {
   display: flex;
   align-items: center;
-  gap: 10px;
+  flex-wrap: nowrap;
+  gap: 8px;
   font-size: 0.8rem;
   color: var(--text-muted);
   margin-bottom: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-meta > * {
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.card-meta time {
+  flex-shrink: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.meta-dot {
+  color: var(--text-muted);
+  opacity: 0.55;
+  user-select: none;
+}
+
+.card-readtime {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
 }
 
 .card-cat {
@@ -443,15 +473,56 @@ a:hover {
   margin-bottom: 16px;
 }
 
+.article-pre-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+  white-space: nowrap;
+}
+
 .article-meta {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 12px;
   font-size: 0.88rem;
   color: var(--text-muted);
   padding-bottom: 20px;
   border-bottom: 1px solid var(--border);
   margin-bottom: 28px;
+  white-space: nowrap;
+}
+
+.article-meta-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
+.share-btn {
+  background: none;
+  border: none;
+  color: var(--accent);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background 0.15s ease;
+}
+
+.share-btn:hover {
+  background: var(--accent-subtle);
 }
 
 .article-body {
@@ -938,16 +1009,45 @@ a:hover {
 }
 
 @media (max-width: 680px) {
+  .post-card {
+    padding: 18px 20px;
+  }
+  .card-meta {
+    font-size: 0.76rem;
+    gap: 6px;
+  }
+  .card-cat {
+    font-size: 0.72rem;
+    padding: 2px 7px;
+  }
+  .card-readtime {
+    font-size: 0.78rem;
+  }
+  .card-footer {
+    padding-top: 10px;
+  }
+  .article-meta {
+    font-size: 0.82rem;
+    gap: 8px;
+    padding-bottom: 16px;
+    margin-bottom: 22px;
+  }
+  .article-meta-info {
+    gap: 6px;
+  }
   .featured-header {
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
     gap: 8px;
+    width: 100%;
   }
   .featured-badge {
     text-align: center;
     margin: 0 auto;
+    display: inline-flex;
+    justify-content: center;
   }
 }
 

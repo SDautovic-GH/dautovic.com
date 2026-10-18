@@ -99,10 +99,8 @@
           <div>
             <div class="card-meta">
               <span class="card-cat">${escapeHtml(cat1)}</span>
-              <span>•</span>
+              <span class="meta-dot">•</span>
               <time datetime="${p1.date}">${formatDate(p1.date)}</time>
-              <span>•</span>
-              <span>${p1.readTime || '3 min read'}</span>
             </div>
             <h2 class="card-title" style="font-size:1.6rem;margin-bottom:12px;">
               <a href="/post.html?slug=${encodeURIComponent(p1.slug)}">${escapeHtml(p1.title)}</a>
@@ -110,6 +108,7 @@
             <p class="card-excerpt" style="font-size:1.02rem;line-height:1.65;margin-bottom:20px;">${escapeHtml(p1.excerpt || '')}</p>
           </div>
           <div class="card-footer">
+            <span class="card-readtime">${p1.readTime || '3 min read'}</span>
             <a href="/post.html?slug=${encodeURIComponent(p1.slug)}" class="read-link" style="font-size:0.92rem;">
               Read featured story <span>→</span>
             </a>
@@ -119,26 +118,32 @@
           <article class="featured-mini-card">
             <div class="card-meta" style="margin-bottom:6px;">
               <span class="card-cat">${escapeHtml(cat2)}</span>
-              <span>•</span>
-              <span>${p2.readTime || '2 min read'}</span>
+              <span class="meta-dot">•</span>
+              <span class="card-readtime">${p2.readTime || '2 min read'}</span>
             </div>
             <h3 class="card-title" style="font-size:1.15rem;margin-bottom:8px;">
               <a href="/post.html?slug=${encodeURIComponent(p2.slug)}">${escapeHtml(p2.title)}</a>
             </h3>
             <p class="card-excerpt" style="font-size:0.88rem;margin-bottom:10px;">${escapeHtml(p2.excerpt || '')}</p>
-            <a href="/post.html?slug=${encodeURIComponent(p2.slug)}" class="read-link" style="font-size:0.82rem;">Read →</a>
+            <div class="card-footer" style="padding-top:6px;border-top:none;">
+              <time datetime="${p2.date}" style="font-size:0.78rem;color:var(--text-muted);">${formatDate(p2.date)}</time>
+              <a href="/post.html?slug=${encodeURIComponent(p2.slug)}" class="read-link" style="font-size:0.82rem;">Read →</a>
+            </div>
           </article>
           <article class="featured-mini-card">
             <div class="card-meta" style="margin-bottom:6px;">
               <span class="card-cat">${escapeHtml(cat3)}</span>
-              <span>•</span>
-              <span>${p3.readTime || '2 min read'}</span>
+              <span class="meta-dot">•</span>
+              <span class="card-readtime">${p3.readTime || '2 min read'}</span>
             </div>
             <h3 class="card-title" style="font-size:1.15rem;margin-bottom:8px;">
               <a href="/post.html?slug=${encodeURIComponent(p3.slug)}">${escapeHtml(p3.title)}</a>
             </h3>
             <p class="card-excerpt" style="font-size:0.88rem;margin-bottom:10px;">${escapeHtml(p3.excerpt || '')}</p>
-            <a href="/post.html?slug=${encodeURIComponent(p3.slug)}" class="read-link" style="font-size:0.82rem;">Read →</a>
+            <div class="card-footer" style="padding-top:6px;border-top:none;">
+              <time datetime="${p3.date}" style="font-size:0.78rem;color:var(--text-muted);">${formatDate(p3.date)}</time>
+              <a href="/post.html?slug=${encodeURIComponent(p3.slug)}" class="read-link" style="font-size:0.82rem;">Read →</a>
+            </div>
           </article>
         </div>
       </div>
@@ -223,16 +228,15 @@
           <article class="post-card">
             <div class="card-meta">
               <span class="card-cat">${escapeHtml(cat)}</span>
-              <span>•</span>
+              <span class="meta-dot">•</span>
               <time datetime="${p.date}">${dateStr}</time>
-              <span>•</span>
-              <span>${p.readTime || '2 min read'}</span>
             </div>
             <h2 class="card-title">
               <a href="/post.html?slug=${encodeURIComponent(p.slug)}">${escapeHtml(p.title)}</a>
             </h2>
             <p class="card-excerpt">${escapeHtml(p.excerpt || '')}</p>
             <div class="card-footer">
+              <span class="card-readtime">${p.readTime || '2 min read'}</span>
               <a href="/post.html?slug=${encodeURIComponent(p.slug)}" class="read-link">
                 Read story <span>→</span>
               </a>
