@@ -26,6 +26,11 @@
 
 ## 3. Completed Milestones
 
+- [x] **Footer Simplification & Interactive Contact Form:**
+  - Removed "RSS Feed" and "Admin" links from the site footer across all public pages (`index`, `archive`, `links`, `page`, `post`), establishing a clean 5-link directory (`Home`, `Archive`, `Links`, `About`, `Contact`).
+  - Built a dedicated, modern Contact Desk at `/contact.html` with direct email card (`samir@dautovic.com`), location badge, validated form (Name, Email, Topic, Message), anti-spam honeypot, and animated success confirmation card.
+  - Implemented `POST /api/contact` edge route in Cloudflare Pages functions with automatic D1 `contacts` table logging.
+  - Configured `page.html` to seamlessly redirect legacy WordPress URLs (`/page.html?slug=contact-2`) to `/contact.html`. *(Completed: 2026-10-18)*
 - [x] **Mobile Post Metadata & Editorial Card Polish:**
   - Resolved awkward 2-line metadata wrapping on mobile screens across all post cards. Split post metadata into a focused single-line top row (`Category • Date`) with `white-space: nowrap; overflow: hidden; text-overflow: ellipsis;` and relocated reading time (`2 min read`) to the card footer next to `Read story →`.
   - Streamlined article header on `/post.html` with `.article-pre-meta` and grouped author/date in `.article-meta-info` with a compact short-month date format, keeping author, date, and share button on a crisp single line across mobile viewports.

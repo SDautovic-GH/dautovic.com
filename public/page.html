@@ -56,8 +56,7 @@
         <a href="/archive.html">Archive</a>
         <a href="/links.html">Links</a>
         <a href="/page.html?slug=about">About</a>
-        <a href="/page.html?slug=contact-2">Contact</a>
-        <a href="/feed.xml">RSS Feed</a>
+        <a href="/contact.html">Contact</a>
       </div>
       <p>© 2026 Samir Dautovic. Built on Cloudflare Pages.</p>
     </div>
@@ -79,6 +78,11 @@
     async function loadPage() {
       const params = new URLSearchParams(window.location.search);
       const slug = params.get('slug') || 'about';
+
+      if (slug === 'contact' || slug === 'contact-2') {
+        window.location.replace('/contact.html');
+        return;
+      }
 
       try {
         const res = await fetch('/data/pages.json');

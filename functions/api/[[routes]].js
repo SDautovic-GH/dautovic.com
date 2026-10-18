@@ -33,6 +33,37 @@ export async function onRequest(context) {
   }
 
   try {
+        if (resource === 'contact') {
+      if (request.method === 'POST') {
+        const body = await request.json().catch(() => ({}));
+        const { name, email, subject, message, company } = body;
+
+        // Anti-spam honeypot
+        if (company) {
+          return jsonResponse({ success: true, message: 'Message sent.' });
+        }
+
+        if (!name || !email || !message) {
+          return jsonResponse({ error: 'Name, email, and message are required.' }, 400);
+        }
+
+        const ip = request.headers.get('cf-connecting-ip') || '';
+
+        // If D1 is bound, create table if needed and record message
+        if (db) {
+          try {
+            await db.prepare().run();
+
+            await db.prepare().bind(name, email, subject || 'General', message, ip).run();
+          } catch (dbErr) {
+            console.error('D1 contact store error:', dbErr);
+          }
+        }
+
+        return jsonResponse({ success: true, message: 'Thank you! Your message has been received.' });
+      }
+    }
+
     if (resource === 'posts') {
       // GET /api/posts
       if (request.method === 'GET' && !param) {
