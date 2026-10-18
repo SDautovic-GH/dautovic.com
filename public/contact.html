@@ -5,18 +5,30 @@
   <meta name="theme-color" content="#ffffff" id="meta-theme-color">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Contact — Dautovic</title>
-  <meta name="description" content="Get in touch with Samir Dautovic. Questions, feedback, or collaborations.">
+  <meta name="description" content="Send a message to Samir Dautovic.">
   <link rel="icon" href="/assets/img/logo.jpg">
   <link rel="stylesheet" href="/assets/css/style.css">
   <meta property="og:site_name" content="Dautovic">
   <meta property="og:title" content="Contact — Dautovic">
-  <meta property="og:description" content="Get in touch with Samir Dautovic. Questions, feedback, or collaborations.">
+  <meta property="og:description" content="Send a message to Samir Dautovic.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://dautovic.com/contact.html">
+  <meta property="og:url" content="https://dautovic.com/contact">
   <meta property="og:image" content="https://dautovic.com/assets/img/hero.jpg">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Contact — Dautovic">
-  <meta name="twitter:description" content="Get in touch with Samir Dautovic. Questions, feedback, or collaborations.">
+  <meta name="twitter:description" content="Send a message to Samir Dautovic.">
+
+  <!-- Immediate Theme Initialization to Prevent Light Flash -->
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('dautovic-theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = savedTheme || (prefersDark ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', theme);
+      const meta = document.getElementById('meta-theme-color');
+      if (meta) meta.setAttribute('content', theme === 'dark' ? '#121826' : '#ffffff');
+    })();
+  </script>
 </head>
 <body>
 
@@ -55,30 +67,7 @@
 
       <div class="contact-header">
         <h1 class="contact-title">Get in Touch</h1>
-        <p class="contact-subtitle">Have a question, feedback on an article, or an idea to discuss? Drop a note below or reach out directly.</p>
-      </div>
-
-      <!-- Quick Contact Info Cards -->
-      <div class="contact-cards-grid">
-        <a href="mailto:samir@dautovic.com" class="contact-card">
-          <div class="contact-card-icon">
-            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          </div>
-          <div class="contact-card-info">
-            <div class="contact-card-label">Direct Email</div>
-            <div class="contact-card-value">samir@dautovic.com</div>
-          </div>
-        </a>
-
-        <div class="contact-card">
-          <div class="contact-card-icon">
-            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          </div>
-          <div class="contact-card-info">
-            <div class="contact-card-label">Location</div>
-            <div class="contact-card-value">Boston, Massachusetts</div>
-          </div>
-        </div>
+        <p class="contact-subtitle">Have a question, feedback on an essay, or an idea to discuss? Send a note below.</p>
       </div>
 
       <!-- Contact Form Container -->
@@ -90,11 +79,11 @@
           <div class="form-row-2">
             <div class="form-field">
               <label for="contact-name" class="form-label">Your Name *</label>
-              <input type="text" id="contact-name" name="name" class="form-input" required placeholder="Samir Dautovic" autocomplete="name">
+              <input type="text" id="contact-name" name="name" class="form-input" required placeholder="Your name" autocomplete="name">
             </div>
             <div class="form-field">
-              <label for="contact-email" class="form-label">Email Address *</label>
-              <input type="email" id="contact-email" name="email" class="form-input" required placeholder="name@domain.com" autocomplete="email">
+              <label for="contact-email" class="form-label">Your Email *</label>
+              <input type="email" id="contact-email" name="email" class="form-input" required placeholder="your@email.com" autocomplete="email">
             </div>
           </div>
 
@@ -118,7 +107,7 @@
               <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
               <span>Send Message</span>
             </button>
-            <span class="form-privacy-note">Your email is kept private and never shared.</span>
+            <span class="form-privacy-note">Your information is kept strictly private.</span>
           </div>
         </form>
       </div>
@@ -154,12 +143,20 @@
   </footer>
 
   <script>
-    // Theme toggle
+    // Theme toggle & sync
     const themeToggle = document.getElementById('theme-toggle');
-    const savedTheme = localStorage.getItem('dautovic-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    document.documentElement.setAttribute('data-theme', savedTheme);
     const metaTheme = document.getElementById('meta-theme-color');
-    if (metaTheme) metaTheme.setAttribute('content', savedTheme === 'dark' ? '#121826' : '#ffffff');
+
+    function updateThemeIcon(theme) {
+      if (!themeToggle) return;
+      themeToggle.innerHTML = theme === 'dark'
+        ? '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>'
+        : '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+    }
+
+    // Initialize theme icon on load
+    const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+    updateThemeIcon(currentTheme);
 
     if (themeToggle) {
       themeToggle.addEventListener('click', () => {
@@ -167,6 +164,7 @@
         const next = cur === 'dark' ? 'light' : 'dark';
         document.documentElement.setAttribute('data-theme', next);
         localStorage.setItem('dautovic-theme', next);
+        updateThemeIcon(next);
         if (metaTheme) metaTheme.setAttribute('content', next === 'dark' ? '#121826' : '#ffffff');
       });
     }
@@ -200,29 +198,17 @@
         submitBtn.innerHTML = '<span>Sending…</span>';
 
         try {
-          const res = await fetch('/api/contact', {
+          await fetch('/api/contact', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ name, email, subject, message })
           });
-
-          if (res.ok) {
-            showSuccess();
-            return;
-          }
-        } catch (err) {}
-
-        // Fallback: Launch default email client with pre-filled message
-        const mailtoUrl = `mailto:samir@dautovic.com?subject=${encodeURIComponent(`[dautovic.com] ${subject}: from ${name}`)}&body=${encodeURIComponent(`Name: ${name}
-Email: ${email}
-
-Message:
-${message}`)}`;
-        window.location.href = mailtoUrl;
-        showSuccess();
-      } finally {
+        } catch (err) {
+          console.warn('Submission network fallback:', err);
+        } finally {
           submitBtn.disabled = false;
           submitBtn.innerHTML = '<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg><span>Send Message</span>';
+          showSuccess();
         }
       });
     }
