@@ -13,6 +13,8 @@
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem('dautovic-theme', theme);
     updateThemeIcon(theme);
+    const meta = document.getElementById('meta-theme-color');
+    if (meta) meta.setAttribute('content', theme === 'dark' ? '#121826' : '#ffffff');
   }
 
   function updateThemeIcon(theme) {
