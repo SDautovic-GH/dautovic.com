@@ -29,11 +29,13 @@
 | Date | Decision | Reason & Trade-offs | Status |
 | :--- | :--- | :--- | :--- |
 | 2026-10-18 | Migration from WordPress.com to Cloudflare Workers | Eliminates recurring WordPress hosting fees, eliminates slow server execution, and unlocks sub-50ms global TTFB via Cloudflare Edge. | Locked |
+| 2026-10-18 | Domain Transfer to Cloudflare Registrar | Slashes annual renewal fees to wholesale at-cost pricing (~$10.44/yr vs $25-35/yr on WP), unifies billing/DNS under one dashboard, and extends expiration to 2027-12-17. | Locked |
 | 2026-10-18 | Migration of `today.dautovic.com` from GitHub Pages to Cloudflare | Bypasses GitHub Pages Let's Encrypt automated CAA/Dnsruby NXDomain delays and negative DNS caching; provides instant edge SSL certificate issuance. | Locked |
 | 2026-10-18 | Cloudflare Worker Static Assets (`[assets] directory = "./public"`) | Zero build step complexity; edge servers directly cache and serve static assets while supporting edge routing. | Locked |
 | 2026-10-18 | Minimalist CMS Desk at `/admin` with Passcode Gate | Lightweight distraction-free editor with live preview, auto-slug generation, and local JSON/D1 drafting without external CMS accounts. | Locked |
 | 2026-10-18 | Strict Origin Referrer Rule in Google Cloud Console | Modern browsers (Safari, Chrome) send only `https://today.dautovic.com` without a trailing slash under `strict-origin-when-cross-origin`. Adding both bare origin and wildcard paths ensures valid API key handshake. | Locked |
 | 2026-10-18 | Editorial CSS Design System with Dark/Light Mode | Clean typography-first layout with curated squircle logo frame, responsive side-by-side author portrait, and dynamic theme-color meta synchronization for iOS Safari. | Locked |
+| 2026-10-18 | Commit-First Cross-Platform Sync Scripts | Matches `ScriptLibrary` and `RSSReader` operational standards: local edits are always committed before pulling or rebasing, preventing work loss or hidden stashes. | Locked |
 
 ---
 
@@ -52,6 +54,7 @@
 
 | Component | Technology | Notes |
 | :--- | :--- | :--- |
+| **Domain Registrar** | Cloudflare Registrar | Registered through 2027-12-17; free WHOIS privacy |
 | **Edge Hosting** | Cloudflare Workers & Pages | Edge network deployment under Cloudflare Account `sdfyix` |
 | **Edge Worker Project** | `dautovic-com` | Manages `https://dautovic.com` and `https://www.dautovic.com/*` |
 | **RSS Reader Project** | `rssreader` | Manages `https://today.dautovic.com` (PWA application) |
@@ -63,16 +66,21 @@
 | **Cloud Database (PWA)** | Google Cloud Firestore | Cross-device feed state and read/saved tracking |
 | **Search Engine** | Client-Side Inverted Index | Instant real-time article and tag search in `app.js` |
 | **Content Ingestion** | Python 3 (`scripts/extract-wp.py`)| Custom parser extracting stories from WordPress XML exports |
+| **Sync Engine** | PowerShell 7 (`SyncGit-*.ps1`) | Commit-first automated synchronization for macOS and Windows |
 
 ---
 
-## 5. Domain & DNS Configuration Specification
+## 5. Domain, Registrar & DNS Specification
 
-| Domain / Subdomain | Target / Service | Cloudflare Proxy | SSL Certificate |
-| :--- | :--- | :--- | :--- |
-| **`dautovic.com`** | Worker `dautovic-com` (Custom Domain) | Proxied (Orange Cloud) | Google Trust Services (Active) |
-| **`www.dautovic.com`** | Worker Route `www.dautovic.com/*` → `dautovic-com` | Proxied (Orange Cloud) | Google Trust Services (Active) |
-| **`today.dautovic.com`** | Worker `rssreader` (Custom Domain) | Proxied (Orange Cloud) | Google Trust Services (Active) |
+| Attribute | Configuration | Notes |
+| :--- | :--- | :--- |
+| **Registrar** | Cloudflare, Inc. | Transferred from Automattic on 2026-10-18 |
+| **Expiry Date** | 2027-12-17 | Extended 1 full year upon transfer |
+| **Renewal Rate** | At-Cost Wholesale (~$10.44/yr) | Zero markup, free WHOIS privacy included |
+| **Nameservers** | `bjorn.ns.cloudflare.com`<br>`marge.ns.cloudflare.com` | Cloudflare DNS managed |
+| **`dautovic.com`** | Worker `dautovic-com` (Custom Domain) | Proxied (Orange Cloud) • Google Trust Services SSL |
+| **`www.dautovic.com`** | Worker Route `www.dautovic.com/*` → `dautovic-com` | Proxied (Orange Cloud) • Google Trust Services SSL |
+| **`today.dautovic.com`**| Worker `rssreader` (Custom Domain) | Proxied (Orange Cloud) • Google Trust Services SSL |
 
 ---
 
@@ -99,16 +107,33 @@ To ensure cross-device synchronization operates without permission denials:
 
 ---
 
-## 7. What's New by Version
+## 7. Cross-Platform Synchronization Specification
+
+Repository synchronization mirrors the standards of `ScriptLibrary` and `RSSReader`:
+
+- **macOS (`SyncGit-macOS-dautovic.com.ps1`):**
+  - Working directory: `~/Developer/dautovic.com`
+  - Flow: Commit local changes -> Fetch `origin/main` -> Fast-forward / Rebase -> Push -> Report repo sizes.
+- **Windows (`SyncGit-dautovic.com.ps1`):**
+  - Working directory: `C:\.Developer\dautovic.com`
+  - OneDrive Mirror: `C:\Users\21968\OneDrive - WilmerHale\.Developer\dautovic.com`
+  - Flow: Commit-first git sync + Robocopy `/MIR` of working files (excluding `.git`, `node_modules`, `.wrangler`, `dist`).
+
+---
+
+## 8. What's New by Version
 
 ### Version 1.0.0 (Initial Production Release — 2026-10-18)
-- Complete WordPress.com migration to Cloudflare Workers.
+- Complete WordPress.com migration to Cloudflare Workers edge.
+- Transferred domain registrar from Automattic to Cloudflare Registrar (expiry extended to 2027-12-17).
 - Extracted and restored 63 historical articles and 8 pages from WordPress XML archive.
 - Created distraction-free CMS Writing Desk at `/admin`.
 - Migrated `today.dautovic.com` PWA to Cloudflare hosting with automated edge SSL.
 - Resolved Google Cloud API Key `strict-origin` referrer restrictions.
 - Responsive mobile UX polish: fixed horizontal overflow, wrapped footer navigation, matched iOS Safari dynamic theme bars.
 - Restored author portrait on About page and eliminated checkerboard logo artifacting.
+- Established cross-platform Git synchronization scripts for macOS and Windows.
+- Safely decommissioned legacy WordPress.com site and set visibility to Private.
 
 ---
 

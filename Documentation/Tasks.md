@@ -12,8 +12,6 @@
 
 ## 1. Immediate Next Steps / Active Sprint
 
-- [x] **Domain Registrar Transfer Completed:** Successfully transferred `dautovic.com` from Automattic (WordPress.com) to Cloudflare Registrar. Expiration extended to 2027-12-17 with at-cost renewal pricing and unified DNS/hosting management. *(Completed: 2026-10-18)*
- Transfer `dautovic.com` registration from Automattic (WordPress.com) to Cloudflare Registrar before 2026-12-17 expiration (unlock domain, obtain EPP code, initiate transfer in Cloudflare, approve confirmation email).
 - [ ] **Content Review & Verification:** Spot-check older posts (2005–2010) in the archive (`/archive.html`) to ensure all legacy image embeds and formatting display cleanly.
 - [ ] **CMS Writing Workflow Test:** Publish a new story draft via the CMS Desk (`/admin`) and verify automatic publication to `posts.json` / D1 and RSS feed (`/feed.xml`).
 - [ ] **Automated Backup Routine:** Establish a scheduled GitHub Action or local script to back up SQLite D1 database and feed exports weekly.
@@ -28,6 +26,7 @@
 
 ## 3. Completed Milestones
 
+- [x] **Domain Registrar Transfer to Cloudflare:** Successfully transferred `dautovic.com` from Automattic (WordPress.com) to Cloudflare Registrar. Expiration extended by 1 full year to 2027-12-17 with at-cost wholesale renewal pricing and unified DNS/hosting management. *(Completed: 2026-10-18)*
 - [x] **Legacy WordPress Site Decommissioning:** Downloaded full archival snapshot and set legacy WordPress.com site visibility to Private (under Settings → Reading), locking the name permanently on WordPress free tier without recurring fees. *(Completed: 2026-10-18)*
 - [x] **Cross-Platform Git Synchronization Scripts:** Built and tested `SyncGit-macOS-dautovic.com.ps1` (for macOS) and `SyncGit-dautovic.com.ps1` (for Windows workstations with OneDrive mirror sync), establishing commit-first automated push/pull workflows with repo size analytics. *(Completed: 2026-10-18)*
 - [x] **Firebase API Key Referrer Fix:** Diagnosed 403 `API_KEY_HTTP_REFERRER_BLOCKED` failure on `today.dautovic.com`. Identified that modern browsers (Safari/Chrome) enforce `strict-origin-when-cross-origin`, transmitting `https://today.dautovic.com` without a trailing slash. Added bare origin `https://today.dautovic.com` and `https://dautovic.com` to Google Cloud Console website restrictions, enabling successful multi-device authentication and cloud feed sync. *(Completed: 2026-10-18)*
