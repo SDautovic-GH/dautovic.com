@@ -40,6 +40,7 @@
   const postExcerptInput = document.getElementById('post-excerpt-input');
   const postContentInput = document.getElementById('post-content-input');
   const previewOutput = document.getElementById('preview-output');
+  const wordCountBadge = document.getElementById('word-count-badge');
   const imageUploadInput = document.getElementById('image-upload-input');
   const saveDraftBtn = document.getElementById('save-draft-btn');
   const publishBtn = document.getElementById('publish-btn');
@@ -231,22 +232,28 @@
 
   // Toolbar button listeners
   document.querySelectorAll('.editor-toolbar .toolbar-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
+    btn.addEventListener('click', () => {
       const action = btn.getAttribute('data-action');
       if (!action) return;
 
       switch (action) {
-        case 'bold':
-          wrapSelection('**', '**', 'bold text');
-          break;
-        case 'italic':
-          wrapSelection('*', '*', 'italic text');
+        case 'title':
+          insertAtCursor('\n# Major Section Title\n');
           break;
         case 'heading':
           insertAtCursor('\n## Heading 2\n');
           break;
         case 'subheading':
           insertAtCursor('\n### Heading 3\n');
+          break;
+        case 'bold':
+          wrapSelection('**', '**', 'bold text');
+          break;
+        case 'italic':
+          wrapSelection('*', '*', 'italic text');
+          break;
+        case 'strike':
+          wrapSelection('~~', '~~', 'strikethrough text');
           break;
         case 'bullet':
           prefixLines('- ');
@@ -257,12 +264,24 @@
         case 'quote':
           prefixLines('> ');
           break;
+        case 'divider':
+          insertAtCursor('\n\n---\n\n');
+          break;
+        case 'code':
+          const textarea = postContentInput;
+          const selected = textarea.value.substring(textarea.selectionStart, textarea.selectionEnd);
+          if (selected.includes('\n')) {
+            wrapSelection('\n```\n', '\n```\n', 'code block');
+          } else {
+            wrapSelection('`', '`', 'code');
+          }
+          break;
         case 'newline':
           insertAtCursor('<br>\n');
           break;
         case 'link':
-          const textarea = postContentInput;
-          const selectedText = textarea.value.substring(textarea.selectionStart, textarea.selectionEnd) || 'link text';
+          const tArea = postContentInput;
+          const selectedText = tArea.value.substring(tArea.selectionStart, tArea.selectionEnd) || 'link text';
           const url = prompt('Enter link URL (e.g. https://example.com):', 'https://');
           if (url && url !== 'https://') {
             insertAtCursor(`[${selectedText}](${url})`);
@@ -284,7 +303,6 @@
       reader.onload = (event) => {
         const img = new Image();
         img.onload = () => {
-          // Resize if larger than 1200px wide
           const maxW = 1200;
           let w = img.width;
           let h = img.height;
@@ -312,17 +330,25 @@
   function parseContent(raw) {
     if (!raw) return '<em style="color:var(--text-muted);">Preview will render here…</em>';
 
-    // If it contains Markdown markers, render them cleanly
     let html = raw;
+
+    // Code blocks: ```code```
+    html = html.replace(/```([\s\S]*?)```/gim, '<pre><code>$1</code></pre>');
+    // Inline code: `code`
+    html = html.replace(/`([^`]+)`/gim, '<code>$1</code>');
 
     // Headings
     html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
     html = html.replace(/^## (.*$)/gim, '<h2>$1</h2>');
     html = html.replace(/^# (.*$)/gim, '<h1>$1</h1>');
 
-    // Bold & Italic
+    // Dividers: ---
+    html = html.replace(/^---$/gim, '<hr class="story-divider">');
+
+    // Bold, Italic, Strikethrough
     html = html.replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>');
     html = html.replace(/\*(.*?)\*/gim, '<em>$1</em>');
+    html = html.replace(/~~(.*?)~~/gim, '<del>$1</del>');
 
     // Images: ![alt](url)
     html = html.replace(/!\[(.*?)\]\((.*?)\)/gim, '<figure style="margin:16px 0;"><img src="$2" alt="$1" style="max-width:100%;border-radius:8px;"><figcaption style="font-size:0.8rem;color:var(--text-muted);margin-top:4px;">$1</figcaption></figure>');
@@ -338,12 +364,12 @@
     html = html.replace(/(<li>.*<\/li>)/gim, '<ul>$1</ul>');
     html = html.replace(/<\/ul>\s*<ul>/gim, '');
 
-    // Convert double newlines to paragraphs if not already wrapped in tags
+    // Convert double newlines to paragraphs
     const paragraphs = html.split(/\n\s*\n/);
     html = paragraphs.map(p => {
       p = p.trim();
       if (!p) return '';
-      if (p.startsWith('<h') || p.startsWith('<ul') || p.startsWith('<block') || p.startsWith('<figure') || p.startsWith('<div')) {
+      if (p.startsWith('<h') || p.startsWith('<ul') || p.startsWith('<block') || p.startsWith('<figure') || p.startsWith('<pre') || p.startsWith('<hr') || p.startsWith('<div')) {
         return p;
       }
       return `<p>${p.replace(/\n/g, '<br>')}</p>`;
@@ -355,7 +381,15 @@
   postContentInput.addEventListener('input', updatePreview);
 
   function updatePreview() {
-    previewOutput.innerHTML = parseContent(postContentInput.value);
+    const text = postContentInput.value;
+    previewOutput.innerHTML = parseContent(text);
+
+    // Update word count & read time
+    if (wordCountBadge) {
+      const words = (text.trim().match(/\w+/g) || []).length;
+      const mins = Math.max(1, Math.round(words / 200));
+      wordCountBadge.textContent = `${words} words • ${mins} min read`;
+    }
   }
 
   cancelEditBtn.addEventListener('click', () => {
@@ -378,6 +412,8 @@
     const excerpt = postExcerptInput.value.trim();
     const rawContent = postContentInput.value.trim();
     const formattedContent = parseContent(rawContent);
+    const words = (rawContent.match(/\w+/g) || []).length;
+    const readTime = `${Math.max(1, Math.round(words / 200))} min read`;
     const now = new Date().toISOString().replace('T', ' ').substring(0, 19);
 
     const postData = {
@@ -387,7 +423,7 @@
       tags: [],
       excerpt: excerpt || rawContent.substring(0, 150).replace(/<[^>]+>/g, '') + '…',
       content: formattedContent,
-      readTime: `${Math.max(1, Math.round(rawContent.split(/\s+/).length / 200))} min read`,
+      readTime,
       date: now,
       status
     };
@@ -400,7 +436,6 @@
       });
       if (!res.ok) throw new Error('API save failed');
     } catch (e) {
-      // Local fallback
       let custom = JSON.parse(localStorage.getItem('dautovic_custom_posts') || '[]');
       custom = custom.filter(p => p.slug !== slug);
       custom.unshift(postData);

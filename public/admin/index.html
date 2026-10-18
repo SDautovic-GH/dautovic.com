@@ -252,14 +252,20 @@
           <div class="editor-layout">
             <div class="editor-textarea-wrap">
               <div class="editor-toolbar">
-                <button type="button" class="toolbar-btn" data-action="bold" title="Bold"><b>B</b></button>
-                <button type="button" class="toolbar-btn" data-action="italic" title="Italic"><i>I</i></button>
+                <button type="button" class="toolbar-btn" data-action="title" title="Title (H1)"><b>H1</b></button>
                 <button type="button" class="toolbar-btn" data-action="heading" title="Heading (H2)">H2</button>
                 <button type="button" class="toolbar-btn" data-action="subheading" title="Subheading (H3)">H3</button>
+                <span class="toolbar-divider"></span>
+                <button type="button" class="toolbar-btn" data-action="bold" title="Bold"><b>B</b></button>
+                <button type="button" class="toolbar-btn" data-action="italic" title="Italic"><i>I</i></button>
+                <button type="button" class="toolbar-btn" data-action="strike" title="Strikethrough"><s>S</s></button>
                 <span class="toolbar-divider"></span>
                 <button type="button" class="toolbar-btn" data-action="bullet" title="Bullet List">• List</button>
                 <button type="button" class="toolbar-btn" data-action="number" title="Numbered List">1. List</button>
                 <button type="button" class="toolbar-btn" data-action="quote" title="Quote">“ ”</button>
+                <span class="toolbar-divider"></span>
+                <button type="button" class="toolbar-btn" data-action="divider" title="Horizontal Divider">— Divider</button>
+                <button type="button" class="toolbar-btn" data-action="code" title="Code / Monospace">&lt;/&gt; Code</button>
                 <button type="button" class="toolbar-btn" data-action="newline" title="Line Break">&para; Break</button>
                 <span class="toolbar-divider"></span>
                 <button type="button" class="toolbar-btn" data-action="link" title="Add / Edit Link">🔗 Link</button>
@@ -268,7 +274,11 @@
                   <input type="file" id="image-upload-input" accept="image/*" style="display:none;">
                 </label>
               </div>
-              <textarea id="post-content-input" class="form-textarea" rows="15" placeholder="Write your story here…" style="font-family:monospace;font-size:0.95rem;width:100%;"></textarea>
+              <textarea id="post-content-input" class="form-textarea" rows="15" placeholder="Write your story here…" style="font-family:monospace;font-size:0.95rem;width:100%;border-radius:0;"></textarea>
+              <div class="editor-status-bar">
+                <span>Markdown & HTML supported</span>
+                <span id="word-count-badge">0 words • 1 min read</span>
+              </div>
             </div>
 
             <!-- Full-Width Live Preview Below -->
