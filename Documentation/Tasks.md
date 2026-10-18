@@ -26,6 +26,15 @@
 
 ## 3. Completed Milestones
 
+- [x] **Editorial Design & Typography Overhaul:** Shipped high-end publishing experience across the site:
+  - Loaded *Newsreader* variable editorial serif for literary long-form reading.
+  - Added ambient scroll progress bar on `post.html` via native CSS scroll-timeline with JS fallback.
+  - Designed asymmetrical "Featured Writing" hero grid for cornerstone essays.
+  - Built end-of-article Next/Previous story continuity navigation cards.
+  - Added power-user keyboard shortcuts (`/` and `Cmd+K` to search, `Esc` to clear).
+  - Added decade timeline quick-jump navigation on `archive.html` (`2020s`, `2010s`, `2000s`).
+  - Upgraded share button with non-blocking toast notification.
+  - Refined story cards with spring Bézier lift and ambient dark-mode glow. *(Completed: 2026-10-18)*
 - [x] **Mobile Navigation & About Link Restoration:** Removed obsolete `hide-mobile` CSS class from the About nav item and added `About` consistently across all public page headers (`index`, `archive`, `links`, `page`, `post`), ensuring full visibility across iOS Safari and mobile viewports. *(Completed: 2026-10-18)*
 - [x] **Navigation Privacy & Shortcuts:** Removed public "Today" header pill and footer link across all visitor pages (`index`, `archive`, `links`, `page`, `post`) to keep private RSS Reader hidden from public web visitors. Added quick-launcher shortcuts ("RSS Reader ↗") directly inside the private `/admin` Writing Desk header and dashboard. *(Completed: 2026-10-18)*
 - [x] **Domain Registrar Transfer to Cloudflare:** Successfully transferred `dautovic.com` from Automattic (WordPress.com) to Cloudflare Registrar. Expiration extended by 1 full year to 2027-12-17 with at-cost wholesale renewal pricing and unified DNS/hosting management. *(Completed: 2026-10-18)*
