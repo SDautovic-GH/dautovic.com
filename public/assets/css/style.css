@@ -928,8 +928,27 @@ a:hover {
   letter-spacing: 0.05em;
   color: var(--accent);
   background: var(--accent-subtle);
-  padding: 3px 10px;
+  padding: 4px 14px;
   border-radius: var(--radius-full);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  line-height: 1.2;
+}
+
+@media (max-width: 680px) {
+  .featured-header {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 8px;
+  }
+  .featured-badge {
+    text-align: center;
+    margin: 0 auto;
+  }
 }
 
 .featured-grid {
