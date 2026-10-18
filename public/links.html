@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Curated Links & Resources — Dautovic</title>
+  <meta name="description" content="Curated tools, reference guides, and favorite web destinations by Samir Dautovic.">
+  <link rel="icon" href="/assets/img/logo.jpg">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <style>
+    .links-hero {
+      padding: 30px 0 20px;
+    }
+    .links-search-box {
+      margin: 16px 0 32px;
+      position: relative;
+    }
+    .links-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 14px;
+      margin-bottom: 36px;
+    }
+    .link-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text-main);
+      transition: all 0.15s ease;
+      box-shadow: var(--shadow-sm);
+    }
+    .link-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent);
+      box-shadow: var(--shadow-md);
+      color: var(--accent);
+    }
+    .link-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: var(--radius-sm);
+      background: var(--bg-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+    .link-icon img {
+      width: 18px;
+      height: 18px;
+      object-fit: contain;
+    }
+    .link-info {
+      overflow: hidden;
+    }
+    .link-title {
+      font-size: 0.92rem;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 1.2;
+    }
+    .link-desc {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-top: 2px;
+    }
+    .group-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-main);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 6px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand-group">
+        <a href="/" style="display:flex;align-items:center;gap:12px;">
+          <img src="/assets/img/logo.jpg" alt="Dautovic Logo" class="brand-logo">
+          <div class="brand-text">
+            <h1>Dautovic</h1>
+            <span class="brand-tagline">Learn every day.</span>
+          </div>
+        </a>
+      </div>
+
+      <nav class="site-nav">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/archive.html" class="nav-link">Archive</a>
+        <a href="/links.html" class="nav-link active">Links</a>
+        <a href="/page.html?slug=about" class="nav-link hide-mobile">About</a>
+        <a href="https://today.dautovic.com" class="today-pill-btn" target="_blank" rel="noopener">
+          <span>Today</span>
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+        </a>
+        <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle dark mode">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="links-hero">
+      <h1 style="font-size:2rem;font-weight:800;letter-spacing:-0.02em;margin-bottom:6px;">Curated Links & Tools</h1>
+      <p style="color:var(--text-muted);font-size:0.95rem;">Personal launchpad for daily AI tools, InfoTech references, and favorite destinations.</p>
+
+      <div class="links-search-box">
+        <svg class="search-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" id="links-search" class="search-input" placeholder="Search curated links, references, or tools…">
+      </div>
+    </section>
+
+    <!-- Section 1: AI & Daily Tools -->
+    <section class="link-category-block" data-category="AI & Daily Tools">
+      <h2 class="group-title">
+        <span>✨ AI & Daily Tools</span>
+      </h2>
+      <div class="links-grid">
+        <a href="https://gemini.google.com" target="_blank" rel="noopener" class="link-card" data-title="Google Gemini">
+          <div class="link-icon"><img src="https://www.google.com/s2/favicons?domain=gemini.google.com&sz=32" alt="Gemini"></div>
+          <div class="link-info"><div class="link-title">Gemini</div><div class="link-desc">Google AI</div></div>
+        </a>
+        <a href="https://claude.ai" target="_blank" rel="noopener" class="link-card" data-title="Anthropic Claude">
+          <div class="link-icon"><img src="https://www.google.com/s2/favicons?domain=claude.ai&sz=32" alt="Claude"></div>
+          <div class="link-info"><div class="link-title">Claude</div><div class="link-desc">Anthropic AI</div></div>
+        </a>
+        <a href="https://chat.openai.com/" target="_blank" rel="noopener" class="link-card" data-title="ChatGPT">
+          <div class="link-icon"><img src="https://www.google.com/s2/favicons?domain=openai.com&sz=32" alt="ChatGPT"></div>
+          <div class="link-info"><div class="link-title">ChatGPT</div><div class="link-desc">OpenAI</div></div>
+        </a>
+        <a href="https://workflowy.com/" target="_blank" rel="noopener" class="link-card" data-title="Workflowy">
+          <div class="link-icon"><img src="https://www.google.com/s2/favicons?domain=workflowy.com&sz=32" alt="Workflowy"></div>
+          <div class="link-info"><div class="link-title">WorkFlowy</div><div class="link-desc">Outliner & Notes</div></div>
+        </a>
+        <a href="https://outlook.live.com/" target="_blank" rel="noopener" class="link-card" data-title="Outlook">
+          <div class="link-icon"><img src="https://www.google.com/s2/favicons?domain=outlook.com&sz=32" alt="Outlook"></div>
+          <div class="link-info"><div class="link-title">Outlook.com</div><div class="link-desc">Microsoft Webmail</div></div>
+        </a>
+        <a href="https://mail.google.com/" target="_blank" rel="noopener" class="link-card" data-title="Gmail">
+          <div class="link-icon"><img src="https://www.google.com/s2/favicons?domain=gmail.com&sz=32" alt="Gmail"></div>
+          <div class="link-info"><div class="link-title">Gmail</div><div class="link-desc">Google Mail</div></div>
+        </a>
+        <a href="https://feedly.com/" target="_blank" rel="noopener" class="link-card" data-title="Feedly">
+          <div class="link-icon"><img src="https://www.google.com/s2/favicons?domain=feedly.com&sz=32" alt="Feedly"></div>
+          <div class="link-info"><div class="link-title">Feedly</div><div class="link-desc">Feed Aggregator</div></div>
+        </a>
+        <a href="https://mastodon.social/home" target="_blank" rel="noopener" class="link-card" data-title="Mastodon">
+          <div class="link-icon"><img src="https://www.google.com/s2/favicons?domain=mastodon.social&sz=32" alt="Mastodon"></div>
+          <div class="link-info"><div class="link-title">Mastodon</div><div class="link-desc">Decentralized Social</div></div>
+        </a>
+        <a href="https://www.threads.net/" target="_blank" rel="noopener" class="link-card" data-title="Threads">
+          <div class="link-icon"><img src="https://www.google.com/s2/favicons?domain=threads.net&sz=32" alt="Threads"></div>
+          <div class="link-info"><div class="link-title">Threads</div><div class="link-desc">Meta Social</div></div>
+        </a>
+      </div>
+    </section>
+
+    <!-- Section 2: InfoTech & Developer Reference -->
+    <section class="link-category-block" data-category="InfoTech">
+      <h2 class="group-title">
+        <span>💻 InfoTech & Systems</span>
+      </h2>
+      <div class="links-grid">
+        <a href="https://techcommunity.microsoft.com/" target="_blank" rel="noopener" class="link-card" data-title="Microsoft Community Hub">
+          <div class="link-icon"><img src="https://www.google.com/s2/favicons?domain=microsoft.com&sz=32" alt="MSFT"></div>
+          <div class="link-info"><div class="link-title">MS Community Hub</div><div class="link-desc">Technical Discussions</div></div>
+        </a>
+        <a href="https://ss64.com/index.html" target="_blank" rel="noopener" class="link-card" data-title="SS64 Command Reference">
+          <div class="link-icon"><img src="https://www.google.com/s2/favicons?domain=ss64.com&sz=32" alt="SS64"></div>
+          <div class="link-info"><div class="link-title">SS64 Commands</div><div class="link-desc">PowerShell / CMD / Bash</div></div>
+        </a>
+        <a href="https://www.mvps.org/" target="_blank" rel="noopener" class="link-card" data-title="Microsoft MVPs">
+          <div class="link-icon"><img src="https://www.google.com/s2/favicons?domain=mvps.org&sz=32" alt="MVP"></div>
+          <div class="link-info"><div class="link-title">Microsoft MVPs</div><div class="link-desc">MVP Directory</div></div>
+        </a>
+        <a href="https://www.w3schools.com/default.asp" target="_blank" rel="noopener" class="link-card" data-title="W3Schools">
+          <div class="link-icon"><img src="https://www.google.com/s2/favicons?domain=w3schools.com&sz=32" alt="W3Schools"></div>
+          <div class="link-info"><div class="link-title">W3Schools</div><div class="link-desc">Web Documentation</div></div>
+        </a>
+        <a href="https://mxtoolbox.com/" target="_blank" rel="noopener" class="link-card" data-title="MXToolbox">
+          <div class="link-icon"><img src="https://www.google.com/s2/favicons?domain=mxtoolbox.com&sz=32" alt="MX"></div>
+          <div class="link-info"><div class="link-title">MailboxTools</div><div class="link-desc">DNS & Mail Diagnostics</div></div>
+        </a>
+        <a href="https://it-ebooks.info/" target="_blank" rel="noopener" class="link-card" data-title="IT eBooks">
+          <div class="link-icon"><img src="https://www.google.com/s2/favicons?domain=it-ebooks.info&sz=32" alt="Books"></div>
+          <div class="link-info"><div class="link-title">IT eBooks</div><div class="link-desc">Free Tech Books</div></div>
+        </a>
+        <a href="http://online-stopwatch.chronme.com/" target="_blank" rel="noopener" class="link-card" data-title="Online Stopwatch">
+          <div class="link-icon"><img src="https://www.google.com/s2/favicons?domain=chronme.com&sz=32" alt="Stopwatch"></div>
+          <div class="link-info"><div class="link-title">Online Stopwatch</div><div class="link-desc">Timer Utility</div></div>
+        </a>
+        <a href="https://www.trendmicro.com/en_us/forHome/products/housecall.html" target="_blank" rel="noopener" class="link-card" data-title="Housecall">
+          <div class="link-icon"><img src="https://www.google.com/s2/favicons?domain=trendmicro.com&sz=32" alt="TrendMicro"></div>
+          <div class="link-info"><div class="link-title">Housecall</div><div class="link-desc">TrendMicro Scanner</div></div>
+        </a>
+      </div>
+    </section>
+
+    <!-- Section 3: Boston, Regional & World -->
+    <section class="link-category-block" data-category="Local & Regional">
+      <h2 class="group-title">
+        <span>📍 Boston, Regional & World</span>
+      </h2>
+      <div class="links-grid">
+        <a href="https://patch.com/massachusetts/melrose" target="_blank" rel="noopener" class="link-card" data-title="Melrose Patch">
+          <div class="link-icon"><img src="https://www.google.com/s2/favicons?domain=patch.com&sz=32" alt="Melrose"></div>
+          <div class="link-info"><div class="link-title">Melrose Patch</div><div class="link-desc">Local Boston News</div></div>
+        </a>
+        <a href="https://melrosepubliclibrary.org/" target="_blank" rel="noopener" class="link-card" data-title="Melrose Public Library">
+          <div class="link-icon"><img src="https://www.google.com/s2/favicons?domain=melrosepubliclibrary.org&sz=32" alt="Library"></div>
+          <div class="link-info"><div class="link-title">Melrose Library</div><div class="link-desc">Catalog & Resources</div></div>
+        </a>
+        <a href="https://www.oslobodjenje.ba/" target="_blank" rel="noopener" class="link-card" data-title="Oslobodjenje">
+          <div class="link-icon"><img src="https://www.google.com/s2/favicons?domain=oslobodjenje.ba&sz=32" alt="Oslobodjenje"></div>
+          <div class="link-info"><div class="link-title">Oslobođenje</div><div class="link-desc">Dnevne Vijesti BiH</div></div>
+        </a>
+        <a href="https://velikakladusa.gov.ba/" target="_blank" rel="noopener" class="link-card" data-title="Velika Kladusa">
+          <div class="link-icon"><img src="https://www.google.com/s2/favicons?domain=velikakladusa.gov.ba&sz=32" alt="VK"></div>
+          <div class="link-info"><div class="link-title">Velika Kladuša</div><div class="link-desc">Zvanična Stranica</div></div>
+        </a>
+        <a href="http://www.velkaton.ba/" target="_blank" rel="noopener" class="link-card" data-title="Velkaton">
+          <div class="link-icon"><img src="https://www.google.com/s2/favicons?domain=velkaton.ba&sz=32" alt="Velkaton"></div>
+          <div class="link-info"><div class="link-title">Velkaton Radio</div><div class="link-desc">Radio & Portal</div></div>
+        </a>
+        <a href="https://www.411.com/" target="_blank" rel="noopener" class="link-card" data-title="411 Directory">
+          <div class="link-icon"><img src="https://www.google.com/s2/favicons?domain=411.com&sz=32" alt="411"></div>
+          <div class="link-info"><div class="link-title">411 Directory</div><div class="link-desc">People & Business</div></div>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-links">
+        <a href="/">Home</a>
+        <a href="/archive.html">Archive</a>
+        <a href="/links.html">Links</a>
+        <a href="/page.html?slug=about">About</a>
+        <a href="/page.html?slug=contact-2">Contact</a>
+        <a href="https://today.dautovic.com">Today Reader</a>
+        <a href="/feed.xml">RSS Feed</a>
+      </div>
+      <p>© 2026 Samir Dautovic. Built on Cloudflare Pages.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Theme
+    const themeToggle = document.getElementById('theme-toggle');
+    const savedTheme = localStorage.getItem('dautovic-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    if (themeToggle) {
+      themeToggle.addEventListener('click', () => {
+        const cur = document.documentElement.getAttribute('data-theme');
+        const next = cur === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('dautovic-theme', next);
+      });
+    }
+
+    // Instant Links Search
+    const searchInput = document.getElementById('links-search');
+    const cards = document.querySelectorAll('.link-card');
+    const sections = document.querySelectorAll('.link-category-block');
+
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase().trim();
+        cards.forEach(card => {
+          const title = card.getAttribute('data-title').toLowerCase();
+          const desc = card.querySelector('.link-desc').textContent.toLowerCase();
+          const match = title.includes(query) || desc.includes(query);
+          card.style.display = match ? 'flex' : 'none';
+        });
+
+        // Hide empty sections during search
+        sections.forEach(sec => {
+          const visibleCards = sec.querySelectorAll('.link-card[style*="display: flex"]');
+          sec.style.display = (query && visibleCards.length === 0) ? 'none' : 'block';
+        });
+      });
+    }
+  </script>
+</body>
+</html>
