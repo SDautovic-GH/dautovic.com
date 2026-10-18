@@ -39,6 +39,7 @@
     <h1 style="font-size:2rem;font-weight:800;margin-bottom:8px;">Story Archive</h1>
     <p style="color:var(--text-muted);margin-bottom:32px;">Chronological index of all published notes, discoveries, and articles.</p>
 
+    <div id="decade-nav" class="decade-nav-wrap" style="display:none;"></div>
     <div id="archive-container">
       <div style="text-align:center;padding:40px;color:var(--text-muted)">Loading archive…</div>
     </div>
@@ -73,39 +74,62 @@
 
     async function loadArchive() {
       const container = document.getElementById('archive-container');
+      const decadeNav = document.getElementById('decade-nav');
       try {
         let res = await fetch('/data/posts.json');
         const posts = await res.json();
 
-        // Group by year
+        // Group by year and count decades
         const byYear = {};
+        const decadeCounts = {};
         posts.forEach(p => {
           const year = p.date.split('-')[0] || 'Earlier';
           if (!byYear[year]) byYear[year] = [];
           byYear[year].push(p);
+
+          const decNum = Math.floor(parseInt(year) / 10) * 10;
+          const decKey = decNum ? `${decNum}s` : 'Earlier';
+          decadeCounts[decKey] = (decadeCounts[decKey] || 0) + 1;
         });
 
         const years = Object.keys(byYear).sort((a, b) => b.localeCompare(a));
+        const decades = Object.keys(decadeCounts).sort((a, b) => b.localeCompare(a));
 
-        container.innerHTML = years.map(yr => `
-          <div class="archive-year-group">
-            <h2 class="archive-year-title">${yr} (${byYear[yr].length})</h2>
-            <ul class="archive-list">
-              ${byYear[yr].map(p => {
-                const d = new Date(p.date.replace(' ', 'T'));
-                const dateStr = isNaN(d) ? p.date.split(' ')[0] : d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-                return `
-                  <li class="archive-item">
-                    <a href="/post.html?slug=${encodeURIComponent(p.slug)}" style="font-weight:500;">
-                      ${escapeHtml(p.title)}
-                    </a>
-                    <span class="archive-date">${dateStr}</span>
-                  </li>
-                `;
-              }).join('')}
-            </ul>
-          </div>
-        `).join('');
+        if (decadeNav) {
+          decadeNav.innerHTML = decades.map(dec => `
+            <a href="#decade-${dec}" class="decade-chip">
+              ${dec} (${decadeCounts[dec]})
+            </a>
+          `).join('');
+          decadeNav.style.display = 'flex';
+        }
+
+        container.innerHTML = years.map(yr => {
+          const decKey = `${Math.floor(parseInt(yr) / 10) * 10}s`;
+          // Attach anchor ID to the first year in each decade
+          const isDecadeLeader = yr.endsWith('9') || yr === years.find(y => Math.floor(parseInt(y) / 10) * 10 === Math.floor(parseInt(yr) / 10) * 10);
+          const anchorAttr = isDecadeLeader ? `id="decade-${decKey}"` : '';
+
+          return `
+            <div class="archive-year-group" ${anchorAttr}>
+              <h2 class="archive-year-title">${yr} (${byYear[yr].length})</h2>
+              <ul class="archive-list">
+                ${byYear[yr].map(p => {
+                  const d = new Date(p.date.replace(' ', 'T'));
+                  const dateStr = isNaN(d) ? p.date.split(' ')[0] : d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                  return `
+                    <li class="archive-item">
+                      <a href="/post.html?slug=${encodeURIComponent(p.slug)}" style="font-weight:500;">
+                        ${escapeHtml(p.title)}
+                      </a>
+                      <span class="archive-date">${dateStr}</span>
+                    </li>
+                  `;
+                }).join('')}
+              </ul>
+            </div>
+          `;
+        }).join('');
 
       } catch (e) {
         container.innerHTML = '<div style="color:var(--text-muted);text-align:center;">Failed to load archive.</div>';

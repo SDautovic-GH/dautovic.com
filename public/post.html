@@ -9,6 +9,8 @@
   <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
+  <!-- Ambient Scroll Reading Progress Bar -->
+  <div id="reading-progress" aria-hidden="true"></div>
 
   <!-- Top Header -->
   <header class="site-header">
@@ -23,7 +25,7 @@
         </a>
       </div>
 
-            <nav class="site-nav">
+      <nav class="site-nav">
         <a href="/" class="nav-link">Home</a>
         <a href="/archive.html" class="nav-link">Archive</a>
         <a href="/links.html" class="nav-link">Links</a>
@@ -58,8 +60,8 @@
           <span>By Samir Dautovic</span>
           <span>•</span>
           <time id="post-date"></time>
-          <button id="share-btn" style="margin-left:auto;background:none;border:none;color:var(--accent);cursor:pointer;display:inline-flex;align-items:center;gap:4px;font-size:0.85rem;font-weight:600;">
-            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8M16 6l-4-4-4 4M12 2v13"/></svg>
+          <button id="share-btn" style="margin-left:auto;background:none;border:none;color:var(--accent);cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-size:0.88rem;font-weight:600;">
+            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8M16 6l-4-4-4 4M12 2v13"/></svg>
             Share
           </button>
         </div>
@@ -67,12 +69,27 @@
 
       <div id="post-body" class="article-body"></div>
 
-      <div style="margin-top:48px;padding-top:24px;border-top:1px solid var(--border);display:flex;justify-content:space-between;">
+      <!-- Continuity: Next / Previous Article Cards -->
+      <div id="post-nav-grid" class="post-nav-grid">
+        <a id="prev-story-link" class="post-nav-card" style="display:none;">
+          <span class="post-nav-dir">← Previous Story</span>
+          <span id="prev-story-title" class="post-nav-title"></span>
+        </a>
+        <a id="next-story-link" class="post-nav-card" style="display:none;text-align:right;">
+          <span class="post-nav-dir">Next Story →</span>
+          <span id="next-story-title" class="post-nav-title"></span>
+        </a>
+      </div>
+
+      <div style="margin-top:40px;padding-top:20px;border-top:1px solid var(--border);display:flex;justify-content:space-between;">
         <a href="/" class="read-link">← More articles</a>
         <a href="#top" class="read-link" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Back to top ↑</a>
       </div>
     </article>
   </main>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast-notification" aria-live="polite">Link copied to clipboard ✓</div>
 
   <footer class="site-footer">
     <div class="container">
@@ -83,23 +100,48 @@
         <a href="/page.html?slug=about">About</a>
         <a href="/page.html?slug=contact-2">Contact</a>
         <a href="/feed.xml">RSS Feed</a>
+        <a href="/admin/">Admin</a>
       </div>
       <p>© 2026 Samir Dautovic. Built on Cloudflare Pages.</p>
     </div>
   </footer>
 
   <script>
-    // Theme toggle
+    // Theme toggle & sync
     const themeToggle = document.getElementById('theme-toggle');
     const savedTheme = localStorage.getItem('dautovic-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
     document.documentElement.setAttribute('data-theme', savedTheme);
+    const metaTheme = document.getElementById('meta-theme-color');
+    if (metaTheme) metaTheme.setAttribute('content', savedTheme === 'dark' ? '#121826' : '#ffffff');
+
     if (themeToggle) {
       themeToggle.addEventListener('click', () => {
         const cur = document.documentElement.getAttribute('data-theme');
         const next = cur === 'dark' ? 'light' : 'dark';
         document.documentElement.setAttribute('data-theme', next);
         localStorage.setItem('dautovic-theme', next);
+        if (metaTheme) metaTheme.setAttribute('content', next === 'dark' ? '#121826' : '#ffffff');
       });
+    }
+
+    // Scroll progress fallback for browsers without native scroll-timeline
+    if (!CSS.supports('animation-timeline', 'scroll()')) {
+      const prog = document.getElementById('reading-progress');
+      window.addEventListener('scroll', () => {
+        const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+        if (scrollable > 0 && prog) {
+          prog.style.transform = `scaleX(${window.scrollY / scrollable})`;
+        }
+      }, { passive: true });
+    }
+
+    // Toast helper
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      if (!toast) return;
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2500);
     }
 
     // Article Loader
@@ -112,30 +154,22 @@
       }
 
       try {
-        let res;
-        try {
-          res = await fetch('/api/posts/' + encodeURIComponent(slug));
-          if (!res.ok) throw new Error('API not available');
-          const post = await res.json();
-          renderArticle(post);
-          return;
-        } catch (e) {
-          // Fall back to static JSON
-          const listRes = await fetch('/data/posts.json');
-          const posts = await listRes.json();
-          const post = posts.find(p => p.slug === slug);
-          if (post) {
-            renderArticle(post);
-          } else {
-            document.getElementById('article-loader').textContent = 'Story not found.';
-          }
+        const listRes = await fetch('/data/posts.json');
+        const posts = await listRes.json();
+        const postIdx = posts.findIndex(p => p.slug === slug);
+        
+        if (postIdx !== -1) {
+          const post = posts[postIdx];
+          renderArticle(post, posts, postIdx);
+        } else {
+          document.getElementById('article-loader').textContent = 'Story not found.';
         }
       } catch (err) {
         document.getElementById('article-loader').textContent = 'Error loading article.';
       }
     }
 
-    function renderArticle(post) {
+    function renderArticle(post, allPosts, idx) {
       document.title = `${post.title} — Dautovic`;
       document.getElementById('post-title').textContent = post.title;
       document.getElementById('post-cat').textContent = post.categories && post.categories[0] ? post.categories[0] : 'General';
@@ -144,6 +178,24 @@
       const d = new Date(post.date.replace(' ', 'T'));
       document.getElementById('post-date').textContent = isNaN(d) ? post.date : d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
       document.getElementById('post-body').innerHTML = post.content;
+
+      // Next / Previous Story Links
+      if (allPosts && allPosts.length > 0) {
+        if (idx < allPosts.length - 1) {
+          const older = allPosts[idx + 1];
+          const prevLink = document.getElementById('prev-story-link');
+          prevLink.href = '/post.html?slug=' + encodeURIComponent(older.slug);
+          document.getElementById('prev-story-title').textContent = older.title;
+          prevLink.style.display = 'flex';
+        }
+        if (idx > 0) {
+          const newer = allPosts[idx - 1];
+          const nextLink = document.getElementById('next-story-link');
+          nextLink.href = '/post.html?slug=' + encodeURIComponent(newer.slug);
+          document.getElementById('next-story-title').textContent = newer.title;
+          nextLink.style.display = 'flex';
+        }
+      }
 
       document.getElementById('article-loader').style.display = 'none';
       document.getElementById('article-content').style.display = 'block';
@@ -155,8 +207,8 @@
             await navigator.share({ title: post.title, url: window.location.href });
           } catch (e) {}
         } else {
-          navigator.clipboard.writeText(window.location.href);
-          alert('Link copied to clipboard!');
+          await navigator.clipboard.writeText(window.location.href);
+          showToast('Link copied to clipboard ✓');
         }
       });
     }

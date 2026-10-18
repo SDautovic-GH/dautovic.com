@@ -49,6 +49,7 @@
 
   // DOM Elements
   const postsContainer = document.getElementById('posts-container');
+  const featuredSection = document.getElementById('featured-section');
   const searchInput = document.getElementById('search-input');
   const categoryChips = document.getElementById('category-chips');
   const prevBtn = document.getElementById('prev-btn');
@@ -66,6 +67,7 @@
         res = await fetch('/data/posts.json');
       }
       allPosts = await res.json();
+      renderFeatured();
       renderCategories();
       renderPosts();
     } catch (err) {
@@ -74,6 +76,74 @@
         postsContainer.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-muted)">Unable to load posts. Please try again.</div>';
       }
     }
+  }
+
+  function renderFeatured() {
+    if (!featuredSection || allPosts.length < 3) return;
+
+    const p1 = allPosts[0];
+    const p2 = allPosts[1];
+    const p3 = allPosts[2];
+
+    const cat1 = p1.categories && p1.categories[0] ? p1.categories[0] : 'Feature';
+    const cat2 = p2.categories && p2.categories[0] ? p2.categories[0] : 'Feature';
+    const cat3 = p3.categories && p3.categories[0] ? p3.categories[0] : 'Feature';
+
+    featuredSection.innerHTML = `
+      <div class="featured-header">
+        <span class="featured-badge">Featured Writing</span>
+        <span style="font-size:0.85rem;color:var(--text-muted)">Selected stories from the archive</span>
+      </div>
+      <div class="featured-grid">
+        <article class="featured-card-hero">
+          <div>
+            <div class="card-meta">
+              <span class="card-cat">${escapeHtml(cat1)}</span>
+              <span>•</span>
+              <time datetime="${p1.date}">${formatDate(p1.date)}</time>
+              <span>•</span>
+              <span>${p1.readTime || '3 min read'}</span>
+            </div>
+            <h2 class="card-title" style="font-size:1.6rem;margin-bottom:12px;">
+              <a href="/post.html?slug=${encodeURIComponent(p1.slug)}">${escapeHtml(p1.title)}</a>
+            </h2>
+            <p class="card-excerpt" style="font-size:1.02rem;line-height:1.65;margin-bottom:20px;">${escapeHtml(p1.excerpt || '')}</p>
+          </div>
+          <div class="card-footer">
+            <a href="/post.html?slug=${encodeURIComponent(p1.slug)}" class="read-link" style="font-size:0.92rem;">
+              Read featured story <span>→</span>
+            </a>
+          </div>
+        </article>
+        <div class="featured-card-side">
+          <article class="featured-mini-card">
+            <div class="card-meta" style="margin-bottom:6px;">
+              <span class="card-cat">${escapeHtml(cat2)}</span>
+              <span>•</span>
+              <span>${p2.readTime || '2 min read'}</span>
+            </div>
+            <h3 class="card-title" style="font-size:1.15rem;margin-bottom:8px;">
+              <a href="/post.html?slug=${encodeURIComponent(p2.slug)}">${escapeHtml(p2.title)}</a>
+            </h3>
+            <p class="card-excerpt" style="font-size:0.88rem;margin-bottom:10px;">${escapeHtml(p2.excerpt || '')}</p>
+            <a href="/post.html?slug=${encodeURIComponent(p2.slug)}" class="read-link" style="font-size:0.82rem;">Read →</a>
+          </article>
+          <article class="featured-mini-card">
+            <div class="card-meta" style="margin-bottom:6px;">
+              <span class="card-cat">${escapeHtml(cat3)}</span>
+              <span>•</span>
+              <span>${p3.readTime || '2 min read'}</span>
+            </div>
+            <h3 class="card-title" style="font-size:1.15rem;margin-bottom:8px;">
+              <a href="/post.html?slug=${encodeURIComponent(p3.slug)}">${escapeHtml(p3.title)}</a>
+            </h3>
+            <p class="card-excerpt" style="font-size:0.88rem;margin-bottom:10px;">${escapeHtml(p3.excerpt || '')}</p>
+            <a href="/post.html?slug=${encodeURIComponent(p3.slug)}" class="read-link" style="font-size:0.82rem;">Read →</a>
+          </article>
+        </div>
+      </div>
+    `;
+    featuredSection.style.display = 'block';
   }
 
   function renderCategories() {
@@ -122,6 +192,10 @@
 
   function renderPosts() {
     if (!postsContainer) return;
+
+    if (featuredSection) {
+      featuredSection.style.display = (currentCategory === 'all' && !searchQuery.trim()) ? 'block' : 'none';
+    }
 
     let filtered = allPosts.filter(p => {
       const matchesCat = (currentCategory === 'all') || (p.categories && p.categories.includes(currentCategory));
@@ -176,6 +250,23 @@
   }
 
   // Event Listeners
+  // Keyboard shortcuts (Cmd+K / / to search, Esc to clear)
+  window.addEventListener('keydown', (e) => {
+    const isInput = document.activeElement && ['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName);
+    const isSearchTrigger = (e.key === '/' && !isInput) || ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k');
+
+    if (isSearchTrigger && searchInput) {
+      e.preventDefault();
+      searchInput.focus();
+      searchInput.select();
+    } else if (e.key === 'Escape' && document.activeElement === searchInput) {
+      searchInput.value = '';
+      searchQuery = '';
+      searchInput.blur();
+      renderPosts();
+    }
+  });
+
   if (searchInput) {
     searchInput.addEventListener('input', (e) => {
       searchQuery = e.target.value;
