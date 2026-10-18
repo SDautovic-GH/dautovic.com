@@ -26,6 +26,10 @@
 
 ## 3. Completed Milestones
 
+- [x] **Mobile Post Metadata & Editorial Card Polish:**
+  - Resolved awkward 2-line metadata wrapping on mobile screens across all post cards. Split post metadata into a focused single-line top row (`Category • Date`) with `white-space: nowrap; overflow: hidden; text-overflow: ellipsis;` and relocated reading time (`2 min read`) to the card footer next to `Read story →`.
+  - Streamlined article header on `/post.html` with `.article-pre-meta` and grouped author/date in `.article-meta-info` with a compact short-month date format, keeping author, date, and share button on a crisp single line across mobile viewports.
+  - Ensured centered alignment for the "Featured Writing" pill badge and header text on mobile. *(Completed: 2026-10-18)*
 - [x] **Dynamic OpenGraph Edge Cards & Pill Badge Centering:**
   - Built Cloudflare Edge Functions (`functions/post.js` & `functions/page.js`) with native `HTMLRewriter` to inject custom story title, excerpt, and thumbnail into OpenGraph and Twitter card meta tags on link sharing (iMessage, WhatsApp, Slack, Twitter/X).
   - Centered the pill-shaped "Featured Writing" badge and subtext on mobile viewports for balanced presentation.
