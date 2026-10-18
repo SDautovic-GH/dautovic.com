@@ -12,7 +12,7 @@
 
 ## 1. Immediate Next Steps / Active Sprint
 
-- [x] **Domain Registrar Transfer:** Initiated transfer from Automattic (WordPress.com) to Cloudflare Registrar; status moved to `pendingTransfer`. *(Initiated: 2026-10-18)*
+- [x] **Domain Registrar Transfer Completed:** Successfully transferred `dautovic.com` from Automattic (WordPress.com) to Cloudflare Registrar. Expiration extended to 2027-12-17 with at-cost renewal pricing and unified DNS/hosting management. *(Completed: 2026-10-18)*
  Transfer `dautovic.com` registration from Automattic (WordPress.com) to Cloudflare Registrar before 2026-12-17 expiration (unlock domain, obtain EPP code, initiate transfer in Cloudflare, approve confirmation email).
 - [ ] **Content Review & Verification:** Spot-check older posts (2005–2010) in the archive (`/archive.html`) to ensure all legacy image embeds and formatting display cleanly.
 - [ ] **CMS Writing Workflow Test:** Publish a new story draft via the CMS Desk (`/admin`) and verify automatic publication to `posts.json` / D1 and RSS feed (`/feed.xml`).
