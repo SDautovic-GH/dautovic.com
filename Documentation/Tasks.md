@@ -26,6 +26,14 @@
 
 ## 3. Completed Milestones
 
+- [x] **Full-Site Polish & Resiliency Overhaul:**
+  - **RSS Feed Integrity:** Repaired article link structure across all 25 items in `feed.xml` to resolve directly to `/post.html?slug=...`, ensuring feed aggregators (Feedly, NetNewsWire, RSSReader) open articles seamlessly without 404s.
+  - **Branded 404 Error Page:** Created `404.html` with cohesive typography, dark/light theme support, and quick navigation back to Home, Archive, and Links.
+  - **Clean Edge Routing for `/about`:** Added Cloudflare Functions edge redirect and `_redirects` rule so `dautovic.com/about` resolves cleanly via HTTP 301.
+  - **Header & Footer Uniformity:** Standardized the top navigation bar across all pages (`Home`, `Archive`, `Links`, `About`) by moving Contact strictly to the site footer.
+  - **Links Directory Curation:** Added Bluesky with self-hosted vector butterfly branding, purged defunct Microsoft MVPs and WorkFlowy links, and reordered tools into clean thematic clusters (Gemini, Claude, ChatGPT, Gmail, Outlook, Bluesky, Mastodon, Threads, Feedly). Upgraded all external URLs to HTTPS.
+  - **Social Sharing Previews:** Added OpenGraph (`og:title`, `og:image`) and Twitter Card metadata to `links.html`.
+  - **Contact API Hardening:** Secured Cloudflare Pages function `POST /api/contact` with parameterized SQLite queries and automatic table schema verification. *(Completed: 2026-10-22)*
 - [x] **Self-Hosted Directory Icons:** Eliminated all external Google Favicon dependencies across the Links directory. Replaced with self-hosted SVGs (Gemini, Claude, ChatGPT) and local favicons for all 23 items under assets/img/favicons/, guaranteeing instant rendering and resilience against tracking prevention. *(Completed: 2026-10-22)*
 - [x] **Deduplicated Featured Writing on Home Page:** Excluded the 3 featured articles from repeating in the main posts stream below on the homepage, while preserving full results when filtering by category or searching. *(Completed: 2026-10-22)*
 - [x] **Footer Simplification & Interactive Contact Form:**
