@@ -123,6 +123,12 @@ Repository synchronization mirrors the standards of `ScriptLibrary` and `RSSRead
 
 ## 8. What's New by Version
 
+### Version 1.1.0 (Links Directory & Home Deduplication — 2026-10-22)
+- **Home Stream Deduplication:** Dynamically excluded the 3 Featured Writing articles from repeating in the stream directly below on the homepage.
+- **Self-Hosted Directory Icons Standard:** Removed all external third-party favicon crawler dependencies (`google.com/s2/favicons`) across `/links.html`.
+- **Automated Favicon Tooling (`scripts/fetch-favicons.py`):** Added automated script to parse new links, download high-res favicons, and save them as local PNGs.
+- **Client-Side Self-Healing Fallback:** Integrated two-tier runtime fallback in `links.html` (DuckDuckGo privacy API fallback -> styled lettermark monogram badge) ensuring no broken or missing icons ever appear.
+
 ### Version 1.0.0 (Initial Production Release — 2026-10-18)
 - Complete WordPress.com migration to Cloudflare Workers edge.
 - Transferred domain registrar from Automattic to Cloudflare Registrar (expiry extended to 2027-12-17).
