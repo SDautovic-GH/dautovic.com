@@ -198,11 +198,20 @@
   function renderPosts() {
     if (!postsContainer) return;
 
+    const isFeaturedVisible = (currentCategory === 'all' && !searchQuery.trim());
     if (featuredSection) {
-      featuredSection.style.display = (currentCategory === 'all' && !searchQuery.trim()) ? 'block' : 'none';
+      featuredSection.style.display = isFeaturedVisible ? 'block' : 'none';
     }
 
+    // Collect slugs of posts displayed in the Featured section so they are not repeated below
+    const featuredSlugs = new Set(
+      (isFeaturedVisible && allPosts.length >= 3)
+        ? [allPosts[0].slug, allPosts[1].slug, allPosts[2].slug]
+        : []
+    );
+
     let filtered = allPosts.filter(p => {
+      if (featuredSlugs.has(p.slug)) return false;
       const matchesCat = (currentCategory === 'all') || (p.categories && p.categories.includes(currentCategory));
       const query = searchQuery.toLowerCase().trim();
       const matchesSearch = !query || 

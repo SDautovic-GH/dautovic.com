@@ -26,6 +26,7 @@
 
 ## 3. Completed Milestones
 
+- [x] **Deduplicated Featured Writing on Home Page:** Excluded the 3 featured articles from repeating in the main posts stream below on the homepage, while preserving full results when filtering by category or searching. *(Completed: 2026-10-22)*
 - [x] **Footer Simplification & Interactive Contact Form:**
   - Removed "RSS Feed" and "Admin" links from the site footer across all public pages (`index`, `archive`, `links`, `page`, `post`), establishing a clean 5-link directory (`Home`, `Archive`, `Links`, `About`, `Contact`).
   - Built a dedicated, modern Contact Desk at `/contact.html` with direct email card (`samir@dautovic.com`), location badge, validated form (Name, Email, Topic, Message), anti-spam honeypot, and animated success confirmation card.
