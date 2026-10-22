@@ -26,6 +26,7 @@
 
 ## 3. Completed Milestones
 
+- [x] **Self-Hosted Directory Icons:** Eliminated all external Google Favicon dependencies across the Links directory. Replaced with self-hosted SVGs (Gemini, Claude, ChatGPT) and local favicons for all 23 items under assets/img/favicons/, guaranteeing instant rendering and resilience against tracking prevention. *(Completed: 2026-10-22)*
 - [x] **Deduplicated Featured Writing on Home Page:** Excluded the 3 featured articles from repeating in the main posts stream below on the homepage, while preserving full results when filtering by category or searching. *(Completed: 2026-10-22)*
 - [x] **Footer Simplification & Interactive Contact Form:**
   - Removed "RSS Feed" and "Admin" links from the site footer across all public pages (`index`, `archive`, `links`, `page`, `post`), establishing a clean 5-link directory (`Home`, `Archive`, `Links`, `About`, `Contact`).
