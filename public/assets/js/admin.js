@@ -48,6 +48,8 @@
   const previewOutput = document.getElementById('preview-output');
   const wordCountBadge = document.getElementById('word-count-badge');
   const imageUploadInput = document.getElementById('image-upload-input');
+  const videoUrlBtn = document.getElementById('video-url-btn');
+  const videoUploadInput = document.getElementById('video-upload-input');
   const saveDraftBtn = document.getElementById('save-draft-btn');
   const publishBtn = document.getElementById('publish-btn');
   const cancelEditBtn = document.getElementById('cancel-edit-btn');
@@ -331,6 +333,79 @@
       };
       reader.readAsDataURL(file);
       imageUploadInput.value = '';
+    });
+  }
+
+  // Video URL Embed Handler (YouTube, Vimeo, direct MP4)
+  if (videoUrlBtn) {
+    videoUrlBtn.addEventListener('click', () => {
+      const url = prompt('Enter video URL (YouTube, Vimeo, or direct .mp4 link):');
+      if (!url) return;
+      const trimmed = url.trim();
+
+      // Check for YouTube
+      const ytMatch = trimmed.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i);
+      if (ytMatch && ytMatch[1]) {
+        const id = ytMatch[1];
+        insertAtCursor(`\n<div class="video-embed-wrap">\n  <iframe src="https://www.youtube.com/embed/${id}" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>\n</div>\n`);
+        return;
+      }
+
+      // Check for Vimeo
+      const vimeoMatch = trimmed.match(/vimeo\.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|album\/(\d+)\/video\/|)(\d+)/i);
+      if (vimeoMatch && vimeoMatch[3]) {
+        const id = vimeoMatch[3];
+        insertAtCursor(`\n<div class="video-embed-wrap">\n  <iframe src="https://player.vimeo.com/video/${id}" title="Vimeo video player" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>\n</div>\n`);
+        return;
+      }
+
+      // Check if user pasted an iframe directly
+      if (trimmed.startsWith('<iframe') && trimmed.endsWith('</iframe>')) {
+        insertAtCursor(`\n<div class="video-embed-wrap">\n  ${trimmed}\n</div>\n`);
+        return;
+      }
+
+      // Otherwise treat as direct video link (.mp4, .webm, etc.)
+      const caption = prompt('Optional video caption (or leave blank):', '') || '';
+      const figOpen = caption ? `<figure class="video-figure">\n` : '';
+      const figClose = caption ? `\n  <figcaption>${caption}</figcaption>\n</figure>` : '';
+      insertAtCursor(`\n${figOpen}<video controls playsinline preload="metadata" class="story-video">\n  <source src="${trimmed}" type="video/mp4">\n  Your browser does not support the video tag.\n</video>${figClose}\n`);
+    });
+  }
+
+  // Upload Local Video File Handler (.mp4, .webm, .mov)
+  if (videoUploadInput) {
+    videoUploadInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const sizeMB = file.size / (1024 * 1024);
+      if (sizeMB > 30) {
+        if (!confirm(`This video file is ${sizeMB.toFixed(1)} MB. Storing very large videos directly in posts can slow down page loading for mobile readers.\n\nDo you want to continue?`)) {
+          videoUploadInput.value = '';
+          return;
+        }
+      }
+
+      const caption = prompt('Enter video caption (or leave blank):', file.name.split('.')[0]) || '';
+      const reader = new FileReader();
+
+      const origStatus = wordCountBadge ? wordCountBadge.textContent : '';
+      if (wordCountBadge) wordCountBadge.textContent = 'Processing video file…';
+
+      reader.onload = (event) => {
+        const dataUrl = event.target.result;
+        const mimeType = file.type || 'video/mp4';
+        const figOpen = caption ? `<figure class="video-figure">\n` : '';
+        const figClose = caption ? `\n  <figcaption>${caption}</figcaption>\n</figure>` : '';
+        insertAtCursor(`\n${figOpen}<video controls playsinline preload="metadata" class="story-video">\n  <source src="${dataUrl}" type="${mimeType}">\n  Your browser does not support HTML5 video.\n</video>${figClose}\n`);
+
+        if (wordCountBadge) wordCountBadge.textContent = origStatus;
+        updatePreview();
+      };
+
+      reader.readAsDataURL(file);
+      videoUploadInput.value = '';
     });
   }
 

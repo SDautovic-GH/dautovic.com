@@ -26,6 +26,10 @@
 
 ## 3. Completed Milestones
 
+- [x] **Video Publishing & Media Integration in CMS:**
+  - **Local Video Upload ("🎞️ My Video"):** Added direct file upload support (`.mp4`, `.webm`, `.mov`) in the Writing Desk. Local video files are processed and embedded as native HTML5 `<video controls playsinline>` with optional captions and instant live preview.
+  - **Video URL Embedding ("🎬 Video URL"):** Added automatic video URL detection and conversion for YouTube (`youtube.com` / `youtu.be`), Vimeo, direct MP4 links, and pasted `<iframe>` embed codes.
+  - **Responsive Embed Styles:** Styled `.article-body video` and `.article-body iframe` with responsive 16:9 aspect ratios, rounded borders, and ambient shadows, ensuring video embeds scale gracefully across mobile and desktop devices. *(Completed: 2026-10-22)*
 - [x] **Full-Site Polish & Resiliency Overhaul:**
   - **RSS Feed Integrity:** Repaired article link structure across all 25 items in `feed.xml` to resolve directly to `/post.html?slug=...`, ensuring feed aggregators (Feedly, NetNewsWire, RSSReader) open articles seamlessly without 404s.
   - **Branded 404 Error Page:** Created `404.html` with cohesive typography, dark/light theme support, and quick navigation back to Home, Archive, and Links.

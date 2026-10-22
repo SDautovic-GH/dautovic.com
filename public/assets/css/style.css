@@ -1503,3 +1503,40 @@ a:hover {
   background-color: var(--bg-surface);
   color: var(--text-main);
 }
+
+/* Responsive Video & Embed Media */
+.article-body video,
+.preview-content video,
+video.story-video {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+  margin: 20px 0;
+  background: #000000;
+  display: block;
+  box-shadow: var(--shadow-sm);
+}
+
+.article-body iframe,
+.preview-content iframe,
+.video-embed-wrap iframe {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+  border-radius: var(--radius-md);
+  margin: 20px 0;
+  display: block;
+  box-shadow: var(--shadow-sm);
+}
+
+.video-figure {
+  margin: 24px 0;
+}
+
+.video-figure figcaption {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-top: 6px;
+  text-align: center;
+}
