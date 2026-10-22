@@ -31,11 +31,23 @@ export async function onRequestPost(context) {
     // If D1 DB is bound, persist message
     if (env.DB) {
       try {
-        await env.DB.prepare().run();
+        await env.DB.prepare(`
+          CREATE TABLE IF NOT EXISTS contacts (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            email TEXT NOT NULL,
+            subject TEXT,
+            message TEXT NOT NULL,
+            ip TEXT,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+          )
+        `).run();
 
-        await env.DB.prepare().bind(name, email, subject || 'General Inquiry', message, ip).run();
+        await env.DB.prepare(
+          "INSERT INTO contacts (name, email, subject, message, ip) VALUES (?, ?, ?, ?, ?)"
+        ).bind(name, email, subject || "General Inquiry", message, ip).run();
       } catch (dbErr) {
-        console.error('D1 contact store error:', dbErr);
+        console.error("D1 contact store error:", dbErr);
       }
     }
 

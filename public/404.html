@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="theme-color" content="#ffffff" id="meta-theme-color">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Page Not Found — Dautovic</title>
+  <meta name="description" content="The page you are looking for could not be found.">
+  <meta name="robots" content="noindex, follow">
+  <link rel="icon" href="/assets/img/logo.jpg">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <style>
+    .error-wrap {
+      min-height: 55vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 60px 20px;
+    }
+    .error-code {
+      font-size: 5rem;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .error-title {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+      color: var(--text-main);
+    }
+    .error-desc {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 480px;
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+    .error-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .error-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 22px;
+      border-radius: var(--radius-full);
+      font-size: 0.92rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+    .error-btn-primary {
+      background: var(--accent);
+      color: #ffffff;
+      box-shadow: var(--shadow-sm);
+    }
+    .error-btn-primary:hover {
+      background: var(--accent-hover);
+      color: #ffffff;
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
+    .error-btn-outline {
+      background: var(--bg-surface);
+      color: var(--text-main);
+      border: 1px solid var(--border);
+    }
+    .error-btn-outline:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-1px);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand-group">
+        <a href="/" style="display:flex;align-items:center;gap:12px;">
+          <img src="/assets/img/logo.jpg" alt="Dautovic Logo" class="brand-logo">
+          <div class="brand-text">
+            <h1>Dautovic</h1>
+            <span class="brand-tagline">Learn every day.</span>
+          </div>
+        </a>
+      </div>
+
+      <nav class="site-nav">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/archive.html" class="nav-link">Archive</a>
+        <a href="/links.html" class="nav-link">Links</a>
+        <a href="/page.html?slug=about" class="nav-link">About</a>
+        <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle dark mode">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="error-wrap">
+      <div class="error-code">404</div>
+      <h1 class="error-title">Page Not Found</h1>
+      <p class="error-desc">
+        The page you are looking for doesn't exist, may have moved, or the link may be outdated.
+      </p>
+      <div class="error-actions">
+        <a href="/" class="error-btn error-btn-primary">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          <span>Return Home</span>
+        </a>
+        <a href="/archive.html" class="error-btn error-btn-outline">Browse Archive</a>
+        <a href="/links.html" class="error-btn error-btn-outline">Curated Links</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-links">
+        <a href="/">Home</a>
+        <a href="/archive.html">Archive</a>
+        <a href="/links.html">Links</a>
+        <a href="/page.html?slug=about">About</a>
+        <a href="/contact.html">Contact</a>
+      </div>
+      <p>© 2026 Samir Dautovic. Built on Cloudflare Pages.</p>
+    </div>
+  </footer>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const savedTheme = localStorage.getItem('dautovic-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    if (themeToggle) {
+      themeToggle.addEventListener('click', () => {
+        const cur = document.documentElement.getAttribute('data-theme');
+        const next = cur === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('dautovic-theme', next);
+      });
+    }
+  </script>
+</body>
+</html>
