@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="dautovic-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#005f96"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="url(#dautovic-bg)"/>
+  <path d="M36 28h22c23.196 0 40 15.67 40 36s-16.804 36-40 36H36V28z" fill="#ffffff" fill-opacity="0.12"/>
+  <path d="M36 28h20c21 0 36 14 36 36 0 22-15 36-36 36H36V28z" fill="none" stroke="#ffffff" stroke-width="12" stroke-linejoin="round"/>
+  <path d="M36 28l22 22v50H36V28z" fill="#38bdf8"/>
+</svg>
